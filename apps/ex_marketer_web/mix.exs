@@ -47,7 +47,8 @@ defmodule ExMarketerWeb.MixProject do
       {:gettext, "~> 0.11"},
       {:ex_marketer, in_umbrella: true},
       {:jason, "~> 1.0"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+      {:sobelow, "~> 0.8", only: [:dev, :test], runtime: false}
     ]
   end
 
