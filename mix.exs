@@ -7,7 +7,14 @@ defmodule ExMarketer.Umbrella.MixProject do
       version: "0.1.0",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      aliases: aliases()
+      aliases: aliases(),
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        lint: :test,
+        coverage: :test,
+        coveralls: :test,
+        "coveralls.html": :test
+      ]
     ]
   end
 
@@ -26,7 +33,8 @@ defmodule ExMarketer.Umbrella.MixProject do
   defp deps do
     [
       {:credo, "~> 1.1", only: [:dev, :test], runtime: false},
-      {:dialyxir, "~> 1.0", only: [:dev], runtime: false}
+      {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
+      {:excoveralls, "~> 0.12.2", only: :test}
     ]
   end
 
@@ -41,8 +49,9 @@ defmodule ExMarketer.Umbrella.MixProject do
   # and cannot be accessed from applications inside the apps/ folder.
   defp aliases do
     [
-      # run `mix setup` in all child apps
-      setup: ["cmd mix setup"]
+      lint: ["format --check-formatted", "credo", "sobelow --root apps/ex_marketer_web --config"],
+      coverage: ["coveralls.html --raise"],
+      test: ["ecto.create --quiet", "ecto.migrate", "test"]
     ]
   end
 end

@@ -45,6 +45,9 @@ jobs:
         MIX_ENV: test
         DB_HOST: db
 
+    - name: Run lint
+      run: mix lint
+
     - name: Run Tests
       run: mix test
       env:
