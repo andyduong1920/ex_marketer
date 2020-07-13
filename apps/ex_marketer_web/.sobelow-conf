@@ -3,7 +3,7 @@
   private: false,
   skip: true,
   router: "",
-  exit: "low",
+  exit: "medium",
   format: "txt",
   ignore: ["Config.HTTPS", "Config.CSP"],
   ignore_files: []

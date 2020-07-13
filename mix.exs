@@ -50,6 +50,7 @@ defmodule ExMarketer.Umbrella.MixProject do
   defp aliases do
     [
       lint: ["format --check-formatted", "credo", "sobelow --root apps/ex_marketer_web --config"],
+      sobelow: ["sobelow --root apps/ex_marketer_web --config"],
       coverage: ["coveralls.html --raise"],
       test: ["ecto.create --quiet", "ecto.migrate", "test"]
     ]
