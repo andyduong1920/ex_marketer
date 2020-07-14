@@ -38,7 +38,7 @@ defmodule ExMarketer.Crawler.Parse do
   defp non_ads_links(parsed_document) do
     parsed_document
     |> Floki.find("#search .r")
-    |> Enum.map(&(extract_non_ads_link(&1)))
+    |> Enum.map(&extract_non_ads_link(&1))
   end
 
   defp extract_non_ads_link(link_item) do
@@ -52,7 +52,7 @@ defmodule ExMarketer.Crawler.Parse do
   defp ads_on_top_links(parsed_document) do
     parsed_document
     |> Floki.find("#tads .ads-ad .ad_cclk")
-    |> Enum.map(&(extract_top_ads_link(&1)))
+    |> Enum.map(&extract_top_ads_link(&1))
   end
 
   defp extract_top_ads_link(link_item) do
