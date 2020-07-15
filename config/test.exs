@@ -20,3 +20,15 @@ config :ex_marketer_web, ExMarketerWeb.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
+
+# ExVCR configuration
+config :exvcr, [
+  vcr_cassette_library_dir: "test/fixture/vcr_cassettes",
+  custom_cassette_library_dir: "test/fixture/custom_cassettes",
+  filter_sensitive_data: [
+    [pattern: "<PASSWORD>.+</PASSWORD>", placeholder: "PASSWORD_PLACEHOLDER"]
+  ],
+  filter_url_params: false,
+  filter_request_headers: [],
+  response_headers_blacklist: []
+]
