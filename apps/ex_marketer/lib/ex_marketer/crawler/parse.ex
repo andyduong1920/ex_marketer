@@ -2,7 +2,7 @@ defmodule ExMarketer.Crawler.Parse do
   alias ExMarketer.Crawler.Result
 
   def perform(body) do
-    result = %Result{}
+    result = %Result{raw_html: body}
 
     {:ok, parsed_document} = body |> Floki.parse_document()
 
