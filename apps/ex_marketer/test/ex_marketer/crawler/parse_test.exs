@@ -11,7 +11,7 @@ defmodule ExMarketer.Crawler.ParseTest do
       {:ok, response_body} = Request.get("chay quang cao")
 
       expecting_result = %Result{
-        raw_html: nil,
+        raw_html: raw_html(),
         total_ads_on_top: 4,
         total_non_ads: 7,
         total_ads: 7,
@@ -35,5 +35,14 @@ defmodule ExMarketer.Crawler.ParseTest do
 
       assert Parse.perform(response_body) === expecting_result
     end
+  end
+
+  defp raw_html do
+    {:ok, body} = File.read("test/fixture/vcr_cassettes/google/valid.json")
+    {:ok, json} = Poison.decode(body)
+
+    result = json |> Enum.at(0)
+
+    result["response"]["body"]
   end
 end
