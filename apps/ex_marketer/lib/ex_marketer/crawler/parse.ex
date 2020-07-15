@@ -1,44 +1,33 @@
 defmodule ExMarketer.Crawler.Parse do
-  def perform(body) do
-    body |> parse_document |> filter
-  end
+  alias ExMarketer.Crawler.Result
 
-  defp parse_document(body) do
+  def perform(body) do
+    result = %Result{}
+
     {:ok, parsed_document} = body |> Floki.parse_document()
 
-    parsed_document
+    parse_total_links(result, parsed_document)
+    |> parse_total_ads(parsed_document)
+    |> parse_non_ads_links(parsed_document)
+    |> parse_ads_on_top_links(parsed_document)
   end
 
-  defp filter(parsed_document) do
-    ads_on_top_links = parsed_document |> ads_on_top_links
-    non_ads_links = parsed_document |> non_ads_links
+  defp parse_total_links(result, document) do
+    total_links = document |> Floki.find("a[href]") |> Enum.count()
 
-    %{
-      ads_on_top: ads_on_top_links |> Enum.count(),
-      ads_on_top_link: ads_on_top_links,
-      total_ads: parsed_document |> total_ads,
-      total_non_ads: non_ads_links |> Enum.count(),
-      non_ads_link: non_ads_links,
-      total_link: parsed_document |> total_links
-    }
+    %{result | total_link: total_links}
   end
 
-  defp total_links(parsed_document) do
-    parsed_document
-    |> Floki.find("a[href]")
-    |> Enum.count()
+  defp parse_total_ads(result, document) do
+    total_ads = document |> Floki.find(".ads-ad") |> Enum.count()
+
+    %{result | total_ads: total_ads}
   end
 
-  defp total_ads(parsed_document) do
-    parsed_document
-    |> Floki.find(".ads-ad")
-    |> Enum.count()
-  end
+  defp parse_non_ads_links(result, document) do
+    non_ads_links = document |> Floki.find("#search .r") |> Enum.map(&extract_non_ads_link(&1))
 
-  defp non_ads_links(parsed_document) do
-    parsed_document
-    |> Floki.find("#search .r")
-    |> Enum.map(&extract_non_ads_link(&1))
+    %{result | non_ads_link: non_ads_links, total_non_ads: non_ads_links |> Enum.count()}
   end
 
   defp extract_non_ads_link(link_item) do
@@ -49,10 +38,15 @@ defmodule ExMarketer.Crawler.Parse do
     href
   end
 
-  defp ads_on_top_links(parsed_document) do
-    parsed_document
-    |> Floki.find("#tads .ads-ad .ad_cclk")
-    |> Enum.map(&extract_top_ads_link(&1))
+  defp parse_ads_on_top_links(result, document) do
+    ads_on_top_link =
+      document |> Floki.find("#tads .ads-ad .ad_cclk") |> Enum.map(&extract_top_ads_link(&1))
+
+    %{
+      result
+      | ads_on_top_link: ads_on_top_link,
+        total_ads_on_top: ads_on_top_link |> Enum.count()
+    }
   end
 
   defp extract_top_ads_link(link_item) do
