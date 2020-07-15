@@ -4,13 +4,18 @@ defmodule ExMarketer.Crawler.ParseTest do
 
   alias ExMarketer.Crawler.Request
   alias ExMarketer.Crawler.Parse
+  alias ExMarketer.Crawler.Result
 
   test "get/1 returns a success tuple" do
     use_cassette "google/valid" do
       {:ok, response_body} = Request.get("chay quang cao")
 
-      expecting_result = %{
-        ads_on_top: 4,
+      expecting_result = %Result{
+        raw_html: nil,
+        total_ads_on_top: 4,
+        total_non_ads: 7,
+        total_ads: 7,
+        total_link: 143,
         ads_on_top_link: [
           "https://ads.google.com/intl/vi_vn/getstarted/",
           "https://doitacgoogle.com/",
@@ -25,10 +30,7 @@ defmodule ExMarketer.Crawler.ParseTest do
           "http://caohuymanh.com/internet-marketing/facebook-marketing/huong-dan-chay-quang-cao-facebook-tu-a-z.html",
           "https://kiemtiencenter.com/tao-tai-khoan-quang-cao-facebook-ads/",
           "https://seotot.vn/chay-quang-cao-facebook.html"
-        ],
-        total_ads: 7,
-        total_link: 143,
-        total_non_ads: 7
+        ]
       }
 
       assert Parse.perform(response_body) === expecting_result
