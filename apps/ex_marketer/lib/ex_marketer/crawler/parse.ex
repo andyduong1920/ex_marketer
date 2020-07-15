@@ -1,5 +1,5 @@
 defmodule ExMarketer.Crawler.Parse do
-  def new(body) do
+  def perform(body) do
     body |> parse_document |> filter
   end
 
