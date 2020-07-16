@@ -25,26 +25,26 @@ defmodule ExMarketer.Keyword do
     @statues
   end
 
-  def changeset(%Keyword{} = keyword, attrs \\ %{}) do
-    keyword
-    |> cast(attrs, [:keyword, :status, :result, :failure_reason])
-    |> validate_required(:keyword)
-    |> validate_inclusion(:status, Map.values(@statues))
-  end
-
   def find(id) do
     Repo.get(Keyword, id)
   end
 
   def create(attrs \\ %{}) do
     %Keyword{}
-    |> Keyword.changeset(attrs)
+    |> changeset(attrs)
     |> Repo.insert()
   end
 
   def update(%Keyword{} = keyword, attrs \\ %{}) do
     keyword
-    |> Keyword.changeset(attrs)
+    |> changeset(attrs)
     |> Repo.update()
+  end
+
+  defp changeset(%Keyword{} = keyword, attrs) do
+    keyword
+    |> cast(attrs, [:keyword, :status, :result, :failure_reason])
+    |> validate_required(:keyword)
+    |> validate_inclusion(:status, Map.values(@statues))
   end
 end
