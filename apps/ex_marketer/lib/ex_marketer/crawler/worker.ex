@@ -25,6 +25,8 @@ defmodule ExMarketer.Crawler.Worker do
 
   defp on_complete(_record_id, _result) do
     # Update the record status to `completed` along with the result
+
+    :ok
   end
 
   defp on_fail(_record_id, _ex) do
