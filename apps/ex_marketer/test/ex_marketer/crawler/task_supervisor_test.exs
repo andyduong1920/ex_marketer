@@ -16,11 +16,11 @@ defmodule ExMarketer.Crawler.TaskSupervisorTest do
 
     test 'start_chilld/1 creates a new Keyword' do
       use_cassette "google/valid" do
-        assert Keyword.all |> Enum.count === 0
+        assert Keyword.all() |> Enum.count() === 0
 
         TaskSupervisor.start_chilld("grammarly")
 
-        assert Keyword.all |> Enum.count === 1
+        assert Keyword.all() |> Enum.count() === 1
       end
     end
   end
@@ -37,11 +37,11 @@ defmodule ExMarketer.Crawler.TaskSupervisorTest do
 
     test 'start_chilld/1 creates a list Keyword' do
       use_cassette "google/valid_list" do
-        assert Keyword.all |> Enum.count === 0
+        assert Keyword.all() |> Enum.count() === 0
 
         TaskSupervisor.start_chilld(["grammarly", "developer"])
 
-        assert Keyword.all |> Enum.count === 2
+        assert Keyword.all() |> Enum.count() === 2
       end
     end
   end
@@ -57,11 +57,11 @@ defmodule ExMarketer.Crawler.TaskSupervisorTest do
 
     test 'start_chilld/1 creates a new Keyword' do
       use_cassette "google/invalid" do
-        assert Keyword.all |> Enum.count === 0
+        assert Keyword.all() |> Enum.count() === 0
 
         TaskSupervisor.start_chilld("invalid")
 
-        assert Keyword.all |> Enum.count === 1
+        assert Keyword.all() |> Enum.count() === 1
       end
     end
   end
