@@ -31,6 +31,7 @@ defmodule ExMarketer.Crawler.Worker do
     |> find_keyword
     |> Keyword.update(%{status: Keyword.statues().successed, result: Map.from_struct(result)})
 
+    # TODO: Broadcast to Phoenix Channel
     :ok
   end
 
