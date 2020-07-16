@@ -1,5 +1,5 @@
 defmodule ExMarketer.Crawler.WorkerTest do
-  use ExUnit.Case, async: true
+  use ExMarketer.DataCase, async: true
   use ExVCR.Mock, adapter: ExVCR.Adapter.Hackney
 
   alias ExMarketer.Crawler.Worker
