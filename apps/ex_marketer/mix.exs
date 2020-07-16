@@ -48,7 +48,7 @@ defmodule ExMarketer.MixProject do
       {:jason, "~> 1.0"},
       {:httpoison, "~> 1.7"},
       {:floki, "~> 0.27.0"},
-      {:poison, "~> 4.0"},
+      {:poison, "~> 4.0", only: [:dev, :test]},
       {:exvcr, "~> 0.11.1", only: [:dev, :test]}
     ]
   end
