@@ -7,7 +7,9 @@ defmodule ExMarketer.Crawler.TaskSupervisor do
 
     Task.Supervisor.start_child(
       ExMarketer.TaskSupervisor,
-      fn -> Worker.perform(record_id, keyword) end,
+      fn ->
+        Worker.perform(record_id, keyword)
+      end,
       restart: :transient
     )
   end
