@@ -10,9 +10,8 @@ defmodule ExMarketer.Application do
       # Start the Ecto repository
       ExMarketer.Repo,
       # Start the PubSub system
-      {Phoenix.PubSub, name: ExMarketer.PubSub}
-      # Start a worker by calling: ExMarketer.Worker.start_link(arg)
-      # {ExMarketer.Worker, arg}
+      {Phoenix.PubSub, name: ExMarketer.PubSub},
+      {Task.Supervisor, name: ExMarketer.TaskSupervisor, max_restarts: 2}
     ]
 
     Supervisor.start_link(children, strategy: :one_for_one, name: ExMarketer.Supervisor)
