@@ -25,6 +25,10 @@ defmodule ExMarketer.Keyword do
     @statues
   end
 
+  def all() do
+    Repo.all(Keyword)
+  end
+
   def find(id) do
     Repo.get(Keyword, id)
   end
