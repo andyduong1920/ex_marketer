@@ -7,7 +7,7 @@ defmodule ExMarketer.Crawler.RequestTest do
   describe "given a successful response" do
     test "get/1 returns a success tuple" do
       use_cassette "google/valid" do
-        {:ok, response_body} = Request.get("chay quang cao")
+        {:ok, response_body} = Request.get("grammarly")
 
         assert response_body !== nil
       end
