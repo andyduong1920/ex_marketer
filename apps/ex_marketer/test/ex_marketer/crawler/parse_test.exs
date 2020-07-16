@@ -6,7 +6,7 @@ defmodule ExMarketer.Crawler.ParseTest do
   alias ExMarketer.Crawler.Parse
   alias ExMarketer.Crawler.Result
 
-  test "get/1 returns a success tuple" do
+  test "perform/1 returns the ExMarketer.Crawler.Result" do
     use_cassette "google/valid" do
       {:ok, response_body} = Request.get("chay quang cao")
 
