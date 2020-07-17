@@ -23,22 +23,24 @@ defmodule ExMarketer.Crawler.Worker do
   defp on_start(keyword_id) do
     keyword_id
     |> find_keyword
-    |> Keyword.update(%{status: Keyword.statues().in_progress})
+    |> Keyword.update!(%{status: Keyword.statues().in_progress})
   end
 
   defp on_complete(keyword_id, result) do
     keyword_id
     |> find_keyword
-    |> Keyword.update(%{status: Keyword.statues().successed, result: Map.from_struct(result)})
+    |> Keyword.update!(%{status: Keyword.statues().successed, result: Map.from_struct(result)})
 
     # TODO: Broadcast to Phoenix Channel
     :ok
   end
 
   defp on_fail(keyword_id, ex) do
+    %MatchError{term: {:error, error_message}} = ex
+
     keyword_id
     |> find_keyword
-    |> Keyword.update(%{status: Keyword.statues().failed, failure_reason: ex})
+    |> Keyword.update!(%{status: Keyword.statues().failed, failure_reason: error_message})
 
     :error
   end
