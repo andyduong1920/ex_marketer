@@ -6,6 +6,7 @@ defmodule ExMarketer.Crawler.TaskSupervisorTest do
   alias ExMarketer.Keyword
 
   describe "given a successful response" do
+    @tag :skip
     test 'start_chilld/1 spawn a new process' do
       use_cassette "google/valid" do
         {:ok, pid} = TaskSupervisor.start_chilld("grammarly")
@@ -14,6 +15,7 @@ defmodule ExMarketer.Crawler.TaskSupervisorTest do
       end
     end
 
+    @tag :skip
     test 'start_chilld/1 creates a new Keyword' do
       use_cassette "google/valid" do
         assert Keyword.all() |> Enum.count() === 0
@@ -26,6 +28,7 @@ defmodule ExMarketer.Crawler.TaskSupervisorTest do
   end
 
   describe "given a list keywords" do
+    @tag :skip
     test 'start_chilld/1 spawn a list new process' do
       use_cassette "google/valid_list" do
         [{:ok, pid_1}, {:ok, pid_2}] = TaskSupervisor.start_chilld(["grammarly", "developer"])
@@ -35,6 +38,7 @@ defmodule ExMarketer.Crawler.TaskSupervisorTest do
       end
     end
 
+    @tag :skip
     test 'start_chilld/1 creates a list Keyword' do
       use_cassette "google/valid_list" do
         assert Keyword.all() |> Enum.count() === 0
@@ -47,6 +51,7 @@ defmodule ExMarketer.Crawler.TaskSupervisorTest do
   end
 
   describe "given an unsuccesful response" do
+    @tag :skip
     test 'start_chilld/1 spawn a new process' do
       use_cassette "google/invalid" do
         {:ok, pid} = TaskSupervisor.start_chilld("invalid")
@@ -55,6 +60,7 @@ defmodule ExMarketer.Crawler.TaskSupervisorTest do
       end
     end
 
+    @tag :skip
     test 'start_chilld/1 creates a new Keyword' do
       use_cassette "google/invalid" do
         assert Keyword.all() |> Enum.count() === 0
