@@ -48,7 +48,11 @@ defmodule ExMarketer.Crawler.WorkerTest do
 
         assert record.status === Keyword.statues().created
 
-        Worker.perform(record.id, "invalid")
+        assert_raise MatchError,
+                     "no match of right hand side value: {:error, \"Response code: 401\"}",
+                     fn ->
+                       Worker.perform(record.id, "invalid")
+                     end
 
         record = Keyword.find(record.id)
 
