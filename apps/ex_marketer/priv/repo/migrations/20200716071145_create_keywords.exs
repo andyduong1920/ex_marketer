@@ -6,7 +6,7 @@ defmodule ExMarketer.Repo.Migrations.CreateKeywords do
       add :keyword, :string
       add :status, :string
       add :result, :jsonb
-      add :failure_reason, {:array, :string}
+      add :failure_reason, :string
 
       timestamps()
     end

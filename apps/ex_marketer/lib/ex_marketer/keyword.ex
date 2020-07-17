@@ -16,7 +16,7 @@ defmodule ExMarketer.Keyword do
     field :keyword, :string
     field :status, :string, default: @statues.created
     field :result, :map, default: %{}
-    field :failure_reason, {:array, :string}, default: []
+    field :failure_reason, :string
 
     timestamps()
   end
@@ -39,10 +39,10 @@ defmodule ExMarketer.Keyword do
     |> Repo.insert()
   end
 
-  def update(%Keyword{} = keyword, attrs \\ %{}) do
+  def update!(%Keyword{} = keyword, attrs \\ %{}) do
     keyword
     |> changeset(attrs)
-    |> Repo.update()
+    |> Repo.update!()
   end
 
   defp changeset(%Keyword{} = keyword, attrs) do
