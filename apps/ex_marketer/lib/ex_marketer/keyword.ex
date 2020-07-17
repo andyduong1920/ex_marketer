@@ -45,7 +45,7 @@ defmodule ExMarketer.Keyword do
     |> Repo.update!()
   end
 
-  defp changeset(%Keyword{} = keyword, attrs) do
+  def changeset(%Keyword{} = keyword, attrs) do
     keyword
     |> cast(attrs, [:keyword, :status, :result, :failure_reason])
     |> validate_required(:keyword)
