@@ -34,7 +34,7 @@ defmodule ExMarketer.MixProject do
   end
 
   # Specifies which paths to compile per environment.
-  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(:test), do: ["lib", "test/support", "test/factories"]
   defp elixirc_paths(_), do: ["lib"]
 
   # Specifies your project dependencies.
@@ -48,7 +48,8 @@ defmodule ExMarketer.MixProject do
       {:jason, "~> 1.0"},
       {:httpoison, "~> 1.7"},
       {:floki, "~> 0.27.0"},
-      {:exvcr, "~> 0.11.1", only: [:dev, :test]}
+      {:exvcr, "~> 0.11.1", only: [:dev, :test]},
+      {:ex_machina, "~> 2.4", only: :test}
     ]
   end
 
