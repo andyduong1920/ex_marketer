@@ -8,7 +8,7 @@ defmodule ExMarketer.Crawler.WorkerTest do
   describe "given a successful response" do
     test 'perform/2 returns :ok' do
       use_cassette "google/valid" do
-        {:ok, record} = Keyword.create(%{keyword: "grammarly"})
+        record = insert(:keyword)
 
         assert Worker.perform(record.id, "grammarly") === :ok
       end
@@ -16,7 +16,7 @@ defmodule ExMarketer.Crawler.WorkerTest do
 
     test 'perform/2 updates the Keyword to success' do
       use_cassette "google/valid" do
-        {:ok, record} = Keyword.create(%{keyword: "grammarly"})
+        record = insert(:keyword)
 
         assert record.status === Keyword.statues().created
 
@@ -32,7 +32,7 @@ defmodule ExMarketer.Crawler.WorkerTest do
   describe "given an unsuccesful response" do
     test 'perform/2 raises an error' do
       use_cassette "google/invalid" do
-        {:ok, record} = Keyword.create(%{keyword: "invalid"})
+        record = insert(:keyword, %{keyword: "invalid"})
 
         assert_raise MatchError,
                      "no match of right hand side value: {:error, \"Response code: 401\"}",
@@ -44,7 +44,7 @@ defmodule ExMarketer.Crawler.WorkerTest do
 
     test 'perform/2 updates the Keyword to failed' do
       use_cassette "google/invalid" do
-        {:ok, record} = Keyword.create(%{keyword: "invalid"})
+        record = insert(:keyword, %{keyword: "invalid"})
 
         assert record.status === Keyword.statues().created
 

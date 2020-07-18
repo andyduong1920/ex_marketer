@@ -13,8 +13,8 @@ defmodule ExMarketer.KeywordTest do
   end
 
   test "all/0 returns all Keyword records" do
-    Keyword.create(%{keyword: "grammarly"})
-    Keyword.create(%{keyword: "developer"})
+    insert(:keyword)
+    insert(:keyword)
 
     result = Keyword.all()
 
@@ -24,7 +24,7 @@ defmodule ExMarketer.KeywordTest do
 
   describe "given an id that exists in the database" do
     test "find/1 returns the Keyword by ID" do
-      {:ok, record} = Keyword.create(%{keyword: "grammarly"})
+      record = insert(:keyword)
       result = Keyword.find(record.id)
 
       assert is_struct(result)
@@ -51,13 +51,13 @@ defmodule ExMarketer.KeywordTest do
   end
 
   test "create/1 creates a record" do
-    Keyword.create(%{keyword: "grammarly"})
+    insert(:keyword)
 
     assert Keyword.all() |> Enum.count() === 1
   end
 
   test "update!/2 update the record" do
-    {:ok, record} = Keyword.create(%{keyword: "grammarly"})
+    record = insert(:keyword)
     Keyword.update!(record, %{keyword: "developer"})
 
     result = Keyword.find(record.id)
