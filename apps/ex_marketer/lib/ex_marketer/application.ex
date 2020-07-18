@@ -11,7 +11,7 @@ defmodule ExMarketer.Application do
       ExMarketer.Repo,
       # Start the PubSub system
       {Phoenix.PubSub, name: ExMarketer.PubSub},
-      {Task.Supervisor, name: ExMarketer.TaskSupervisor, max_restarts: 2}
+      ExMarketer.Crawler.DynamicSupervisor
     ]
 
     Supervisor.start_link(children, strategy: :one_for_one, name: ExMarketer.Supervisor)
