@@ -33,6 +33,15 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+config :sentry,
+  dsn: System.get_env("SENTRY_DSN"),
+  included_environments: [:prod],
+  environment_name: :prod,
+  enable_source_code_context: true,
+  root_source_code_path: File.cwd!(),
+  tags: %{app_version: System.get_env("APP_VERSION", "0.0.1")},
+  context_lines: 5
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

@@ -50,7 +50,7 @@ config :ex_marketer_web, ExMarketerWeb.Endpoint,
 # Check `Plug.SSL` for all available options in `force_ssl`.
 
 # Do not print debug messages in production
-config :logger, level: :info
+config :logger, Sentry.LoggerBackend, level: :info
 
 # Finally import the config/prod.secret.exs which loads secrets
 # and configuration from environment variables.
