@@ -39,7 +39,7 @@ defmodule ExMarketer.Crawler.ParseTest do
 
   defp raw_html do
     {:ok, body} = File.read("test/fixture/vcr_cassettes/google/valid.json")
-    {:ok, json} = Poison.decode(body)
+    {:ok, json} = Jason.decode(body)
 
     result = json |> Enum.at(0)
 
