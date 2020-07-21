@@ -1,7 +1,13 @@
-defmodule ExMarketerWeb.PageController do
+defmodule ExMarketerWeb.KeywordController do
   use ExMarketerWeb, :controller
 
   alias ExMarketer.Keyword
+
+  def index(conn, _params) do
+    keywords = Keyword.all()
+
+    render(conn, "index.html", keywords: keywords)
+  end
 
   def show(conn, %{"id" => id}) do
     keyword = Keyword.find(id)

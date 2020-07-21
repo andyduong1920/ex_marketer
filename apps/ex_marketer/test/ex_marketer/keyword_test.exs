@@ -12,14 +12,17 @@ defmodule ExMarketer.KeywordTest do
            }
   end
 
-  test "all/0 returns all Keyword records" do
-    insert(:keyword)
-    insert(:keyword)
+  test "all/0 returns all Keyword records ordered with inserted_at DESC" do
+    current_time = DateTime.utc_now()
+    first_keyword = insert(:keyword, inserted_at: current_time)
+    second_keyword = insert(:keyword, inserted_at: DateTime.add(current_time, 3))
 
     result = Keyword.all()
 
     assert is_list(result)
     assert result |> Enum.count() === 2
+    assert result |> Enum.at(0) == second_keyword
+    assert result |> Enum.at(1) == first_keyword
   end
 
   describe "given an id that exists in the database" do
@@ -63,5 +66,21 @@ defmodule ExMarketer.KeywordTest do
     result = Keyword.find(record.id)
 
     assert result.keyword() === "developer"
+  end
+
+  describe "given a successed status" do
+    test "successed?/1 returns true" do
+      record = insert(:keyword, status: "successed")
+
+      assert Keyword.successed?(record) === true
+    end
+  end
+
+  describe "given a non-successed status" do
+    test "successed?/1 returns false" do
+      record = insert(:keyword, status: "in_progress")
+
+      assert Keyword.successed?(record) === false
+    end
   end
 end
