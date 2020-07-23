@@ -1,0 +1,18 @@
+<div class="row my-3">
+	<div class="col col-12">
+		<%= link gettext("back_to_dashboard"), to: Routes.keyword_path(@conn, :index), class: "btn btn-sm btn-primary" %>
+	</div>
+</div>
+
+<hr/>
+
+<%= form_for @changeset, Routes.keyword_path(@conn, :create), [multipart: true], fn f -> %>
+<div class="form-group">
+	<%= file_input f, :file, class: "form-control-file", required: true %>
+	<%= error_tag f, :file %>
+</div>
+
+<div class="form-group">
+	<%= submit gettext("upload"), class: "btn btn-sm btn-primary" %>
+</div>
+<% end %>
