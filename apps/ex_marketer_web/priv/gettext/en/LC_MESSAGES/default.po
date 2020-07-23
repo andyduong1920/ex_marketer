@@ -54,3 +54,12 @@ msgstr "Updated At"
 
 msgid "empty_data"
 msgstr "Empty data"
+
+msgid "upload_csv"
+msgstr "Upload CSV"
+
+msgid "upload"
+msgstr "Upload"
+
+msgid "upload_success"
+msgstr "The keys are uploaded successfully"

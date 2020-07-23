@@ -18,7 +18,7 @@ defmodule ExMarketerWeb.Router do
 
     get("/", KeywordController, :index)
 
-    resources("/keywords", KeywordController, only: [:show, :index])
+    resources("/keywords", KeywordController, only: [:show, :index, :new, :create])
     resources("/pages", PageController, only: [:show])
   end
 

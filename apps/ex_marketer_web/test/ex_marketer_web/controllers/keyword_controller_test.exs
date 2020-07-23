@@ -43,4 +43,29 @@ defmodule ExMarketerWeb.KeywordControllerTest do
       assert html_response(conn, 404) =~ "Not Found"
     end
   end
+
+  test "GET /keywords/new", %{conn: conn} do
+    conn = get(conn, Routes.keyword_path(conn, :new))
+
+    assert html_response(conn, 200) =~ "Upload"
+  end
+
+  describe "given valid attribute" do
+    test "POST /keywords", %{conn: conn} do
+      upload = %Plug.Upload{path: "test/fixture/template.csv", filename: "template.csv"}
+
+      conn = post(conn, Routes.keyword_path(conn, :create), %{keyword: %{file: upload}})
+
+      assert get_flash(conn, :info) === "The keys are uploaded successfully"
+      assert redirected_to(conn) === Routes.keyword_path(conn, :index)
+    end
+  end
+
+  describe "given invalid attribute" do
+    test "POST /keywords", %{conn: conn} do
+      conn = post(conn, Routes.keyword_path(conn, :create), %{keyword: %{file: nil}})
+
+      assert html_response(conn, 200) =~ "can&#39;t be blank"
+    end
+  end
 end

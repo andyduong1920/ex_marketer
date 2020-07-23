@@ -45,11 +45,19 @@ defmodule ExMarketer.KeywordTest do
     test "changeset/2 returns true" do
       assert Keyword.changeset(%Keyword{}, %{keyword: "grammarly"}).valid? === true
     end
+
+    test "upload_keyword_changeset/1 returns true" do
+      assert Keyword.upload_keyword_changeset(%{file: %{file_path: "file_path"}}).valid? === true
+    end
   end
 
   describe "given invalid attributes" do
     test "changeset/2 returns false" do
-      assert Keyword.changeset(%Keyword{}, %{keyword: ""}).valid? === false
+      assert Keyword.changeset(%Keyword{}, %{keyword: nil}).valid? === false
+    end
+
+    test "upload_keyword_changeset/1 returns false" do
+      assert Keyword.upload_keyword_changeset(%{file: nil}).valid? === false
     end
   end
 

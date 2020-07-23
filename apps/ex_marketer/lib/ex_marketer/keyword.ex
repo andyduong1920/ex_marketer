@@ -18,6 +18,7 @@ defmodule ExMarketer.Keyword do
     field :status, :string, default: @statues.created
     field :result, :map, default: %{}
     field :failure_reason, :string
+    field :file, :map, virtual: true
 
     timestamps()
   end
@@ -27,9 +28,11 @@ defmodule ExMarketer.Keyword do
   end
 
   def all() do
+    # TODO: Pagination
     query =
       from Keyword,
-        order_by: [desc: :inserted_at]
+        order_by: [desc: :inserted_at],
+        limit: 20
 
     Repo.all(query)
   end
@@ -59,5 +62,11 @@ defmodule ExMarketer.Keyword do
     |> cast(attrs, [:keyword, :status, :result, :failure_reason])
     |> validate_required(:keyword)
     |> validate_inclusion(:status, Map.values(@statues))
+  end
+
+  def upload_keyword_changeset(attrs \\ %{}) do
+    %Keyword{}
+    |> cast(attrs, [:file])
+    |> validate_required(:file)
   end
 end
