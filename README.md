@@ -23,3 +23,7 @@ mix phx.server
 ```
 
 The Web app will run on `localhost:4000`
+
+## Live version
+
+https://ex-marketer.herokuapp.com/
