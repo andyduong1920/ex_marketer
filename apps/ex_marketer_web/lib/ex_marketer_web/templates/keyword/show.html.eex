@@ -44,9 +44,21 @@
 					<%= localize_result(key) %>
 				</div>
 
-				<div>
-					<%= @keyword.result[key] %>
-				</div>
+				<% value = @keyword.result[key] %>
+
+				<%= if is_list(value) do %>
+					<ul>
+						<%= for item <- value do %>
+							<li>
+								<%= link item, to: item, target: "_blank" %>
+							</li>
+						<% end %>
+					</ul>
+				<% else %>
+					<div>
+						<%= @keyword.result[key] %>
+					</div>
+				<% end %>
 			</div>
 		<% end %>
 	<% end %>
