@@ -1,6 +1,7 @@
 defmodule ExMarketer.Keyword do
   use Ecto.Schema
   import Ecto.Changeset
+  import Ecto.Query, only: [from: 2]
 
   alias ExMarketer.Keyword
   alias ExMarketer.Repo
@@ -26,7 +27,11 @@ defmodule ExMarketer.Keyword do
   end
 
   def all() do
-    Repo.all(Keyword)
+    query =
+      from Keyword,
+        order_by: [desc: :inserted_at]
+
+    Repo.all(query)
   end
 
   def find(id) do
@@ -43,6 +48,10 @@ defmodule ExMarketer.Keyword do
     keyword
     |> changeset(attrs)
     |> Repo.update!()
+  end
+
+  def successed?(keyword) do
+    keyword.status === "successed"
   end
 
   def changeset(%Keyword{} = keyword, attrs) do

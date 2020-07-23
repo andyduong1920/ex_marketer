@@ -24,6 +24,13 @@ defmodule ExMarketerWeb do
       import Plug.Conn
       import ExMarketerWeb.Gettext
       alias ExMarketerWeb.Router.Helpers, as: Routes
+
+      def render_404(conn) do
+        conn
+        |> put_status(:not_found)
+        |> put_view(ExMarketerWeb.ErrorView)
+        |> render(:"404")
+      end
     end
   end
 

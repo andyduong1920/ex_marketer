@@ -1,0 +1,56 @@
+msgid "created_at %{created_at}"
+msgstr "Created at: %{created_at}"
+
+msgid "created"
+msgstr "In Queue"
+
+msgid "in_progress"
+msgstr "In Progress"
+
+msgid "failed"
+msgstr "Failed"
+
+msgid "successed"
+msgstr "Successed"
+
+msgid "view_details"
+msgstr "View Details"
+
+msgid "view_page"
+msgstr "View Google Search Page"
+
+msgid "back_to_dashboard"
+msgstr "Back To Dashboard"
+
+msgid "can_not_view"
+msgstr "Can not view"
+
+msgid "ads_on_top_link"
+msgstr "Ads on Top links"
+
+msgid "non_ads_link"
+msgstr "Non Ads links"
+
+msgid "total_ads"
+msgstr "Total Ads"
+
+msgid "total_ads_on_top"
+msgstr "Total Ads on Top"
+
+msgid "total_link"
+msgstr "Total Links"
+
+msgid "total_non_ads"
+msgstr "Total Non Ads"
+
+msgid "keyword"
+msgstr "Keyword"
+
+msgid "created_at"
+msgstr "Created At"
+
+msgid "updated_at"
+msgstr "Updated At"
+
+msgid "empty_data"
+msgstr "Empty data"

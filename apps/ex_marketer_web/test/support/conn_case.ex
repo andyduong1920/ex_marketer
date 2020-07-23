@@ -23,6 +23,7 @@ defmodule ExMarketerWeb.ConnCase do
       import Plug.Conn
       import Phoenix.ConnTest
       import ExMarketerWeb.ConnCase
+      import ExMarketerWeb.Factory
 
       alias ExMarketerWeb.Router.Helpers, as: Routes
 
