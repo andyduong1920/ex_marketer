@@ -1,4 +1,5 @@
 defmodule ExMarketer.Crawler.TaskSupervisor do
+  alias ExMarketer.Keyword
   alias ExMarketer.Crawler.Worker
 
   def start_chilld(keywords) when is_list(keywords) do
@@ -6,13 +7,12 @@ defmodule ExMarketer.Crawler.TaskSupervisor do
   end
 
   def start_chilld(keyword) when is_binary(keyword) do
-    # TODO: Store the keyword into the Database and passing the record id the worker
-    record_id = 1
+    {:ok, record} = Keyword.create(%{keyword: keyword})
 
     Task.Supervisor.start_child(
       ExMarketer.TaskSupervisor,
       fn ->
-        Worker.perform(record_id, keyword)
+        Worker.perform(record.id, keyword)
       end,
       restart: :transient
     )
