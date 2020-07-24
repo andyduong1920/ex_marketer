@@ -27,3 +27,19 @@ The Web app will run on `localhost:4000`
 ## Live version
 
 https://ex-marketer.herokuapp.com/
+
+## Test
+
+1/ Install `chromedriver`
+
+```bash
+brew cask install chromedriver
+```
+
+2/ Running test
+
+```bash
+mix test # with Chrome Headless browser
+
+CHROME_HEADLESS=false mix test # with Chrome browser
+```

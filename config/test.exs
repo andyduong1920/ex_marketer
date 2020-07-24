@@ -37,5 +37,6 @@ config :exvcr,
 # Wallaby
 config :wallaby,
   otp_app: :ex_marketer,
-  chromedriver: [headless: false],
+  chromedriver: [headless: System.get_env("CHROME_HEADLESS", "true") !== "false"],
+  screenshot_dir: "tmp/wallaby_screenshots",
   screenshot_on_failure: true
