@@ -49,6 +49,7 @@ defmodule ExMarketerWeb.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:sobelow, "~> 0.8", only: [:dev, :test], runtime: false},
+      {:wallaby, "~> 0.26.2", only: :test, runtime: false},
       {:ex_machina, "~> 2.4", only: :test}
     ]
   end
@@ -59,7 +60,19 @@ defmodule ExMarketerWeb.MixProject do
   defp aliases do
     [
       setup: ["deps.get", "cmd npm install --prefix assets"],
-      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"]
+      test: [
+        "assets.compile --quiet",
+        "ecto.create --quiet",
+        "ecto.migrate --quiet",
+        "test"
+      ],
+      "assets.compile": &compile_assets/1
     ]
+  end
+
+  defp compile_assets(_) do
+    Mix.shell().cmd("cd assets && ./node_modules/.bin/webpack --mode development",
+      quiet: true
+    )
   end
 end

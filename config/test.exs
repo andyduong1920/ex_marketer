@@ -16,7 +16,9 @@ config :ex_marketer, ExMarketer.Repo,
 # you can enable the server option below.
 config :ex_marketer_web, ExMarketerWeb.Endpoint,
   http: [port: 4002],
-  server: false
+  server: true
+
+config :ex_marketer_web, :sql_sandbox, true
 
 # Print only warnings and errors during test
 config :logger, level: :warn
@@ -31,3 +33,9 @@ config :exvcr,
   filter_url_params: false,
   filter_request_headers: [],
   response_headers_blacklist: []
+
+# Wallaby
+config :wallaby,
+  otp_app: :ex_marketer,
+  chromedriver: [headless: false],
+  screenshot_on_failure: true
