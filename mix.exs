@@ -34,8 +34,7 @@ defmodule ExMarketer.Umbrella.MixProject do
     [
       {:credo, "~> 1.1", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
-      {:excoveralls, "~> 0.12.2", only: :test},
-      {:ex_machina, "~> 2.4", only: :test}
+      {:excoveralls, "~> 0.12.2", only: :test}
     ]
   end
 
