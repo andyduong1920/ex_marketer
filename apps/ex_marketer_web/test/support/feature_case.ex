@@ -7,6 +7,8 @@ defmodule ExMarketerWeb.FeatureCase do
 
       import ExMarketerWeb.Gettext
       import ExMarketerWeb.Factory
+
+      alias ExMarketerWeb.Router.Helpers, as: Routes
     end
   end
 end

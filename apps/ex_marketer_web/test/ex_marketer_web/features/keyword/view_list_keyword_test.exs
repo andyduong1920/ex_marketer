@@ -1,7 +1,7 @@
 defmodule ExMarketerWeb.ViewListKeywordTest do
   use ExMarketerWeb.FeatureCase, async: true
 
-  @path "/keywords"
+  @path Routes.keyword_path(ExMarketerWeb.Endpoint, :index)
 
   @messages %{
     upload_csv: gettext("upload_csv"),
