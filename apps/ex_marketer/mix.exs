@@ -50,7 +50,11 @@ defmodule ExMarketer.MixProject do
       {:floki, "~> 0.27.0"},
       {:exvcr, "~> 0.11.1", only: :test},
       {:csv, "~> 2.3"},
-      {:ex_machina, "~> 2.4", only: :test}
+      {:ex_machina, "~> 2.4", only: :test},
+      {:argon2_elixir, "~> 2.3"},
+      {:ueberauth, "~> 0.6.3"},
+      {:ueberauth_identity, "~> 0.3.0"},
+      {:guardian, "~> 2.1.1"}
     ]
   end
 

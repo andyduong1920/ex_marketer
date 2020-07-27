@@ -20,6 +20,10 @@ defmodule ExMarketerWeb.Router do
 
     resources("/keywords", KeywordController, only: [:show, :index, :new, :create])
     resources("/pages", PageController, only: [:show])
+
+    get "/register", RegistrationController, :new
+    post "/register", RegistrationController, :create
+    get "/login", SessionController, :new
   end
 
   # Other scopes may use custom stacks.
