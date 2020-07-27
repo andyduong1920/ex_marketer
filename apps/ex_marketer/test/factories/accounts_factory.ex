@@ -1,4 +1,4 @@
-defmodule ExMarketer.AccountsFixtures do
+defmodule ExMarketer.AccountsFactory do
   @moduledoc """
   This module defines test helpers for creating
   entities via the `ExMarketer.Accounts` context.

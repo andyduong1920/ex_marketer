@@ -2,7 +2,7 @@ defmodule ExMarketerWeb.UserSettingsControllerTest do
   use ExMarketerWeb.ConnCase, async: true
 
   alias ExMarketer.Accounts
-  import ExMarketer.AccountsFixtures
+  import ExMarketer.AccountsFactory
 
   setup :register_and_log_in_user
 

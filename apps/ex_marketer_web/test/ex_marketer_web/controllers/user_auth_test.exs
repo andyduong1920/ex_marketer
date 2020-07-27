@@ -3,7 +3,7 @@ defmodule ExMarketerWeb.UserAuthTest do
 
   alias ExMarketer.Accounts
   alias ExMarketerWeb.UserAuth
-  import ExMarketer.AccountsFixtures
+  import ExMarketer.AccountsFactory
 
   setup %{conn: conn} do
     conn =

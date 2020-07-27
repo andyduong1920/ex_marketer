@@ -3,7 +3,7 @@ defmodule ExMarketerWeb.UserConfirmationControllerTest do
 
   alias ExMarketer.Accounts
   alias ExMarketer.Repo
-  import ExMarketer.AccountsFixtures
+  import ExMarketer.AccountsFactory
 
   setup do
     %{user: user_fixture()}

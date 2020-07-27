@@ -1,7 +1,7 @@
 defmodule ExMarketerWeb.UserSessionControllerTest do
   use ExMarketerWeb.ConnCase, async: true
 
-  import ExMarketer.AccountsFixtures
+  import ExMarketer.AccountsFactory
 
   setup do
     %{user: user_fixture()}

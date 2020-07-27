@@ -2,7 +2,7 @@ defmodule ExMarketer.AccountsTest do
   use ExMarketer.DataCase
 
   alias ExMarketer.Accounts
-  import ExMarketer.AccountsFixtures
+  import ExMarketer.AccountsFactory
   alias ExMarketer.Accounts.{User, UserToken}
 
   describe "get_user_by_email/1" do

@@ -1,7 +1,7 @@
 defmodule ExMarketerWeb.UserRegistrationControllerTest do
   use ExMarketerWeb.ConnCase, async: true
 
-  import ExMarketer.AccountsFixtures
+  import ExMarketer.AccountsFactory
 
   describe "GET /users/register" do
     test "renders registration page", %{conn: conn} do
