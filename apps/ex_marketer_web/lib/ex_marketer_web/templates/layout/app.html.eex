@@ -10,9 +10,8 @@
 	</head>
 
 	<body>
-
-	  <%= render "_user_menu.html", assigns %>
 		<main role="main" class="container">
+			<%= render "_user_menu.html", assigns %>
 			<%= if get_flash(@conn, :info) do %>
 				<p class="alert alert-info my-3" role="alert"><%= get_flash(@conn, :info) %></p>
 			<% end %>
