@@ -30,6 +30,17 @@ defmodule ExMarketer.Keyword do
     @statues
   end
 
+  def all() do
+    # TODO: Pagination
+    query =
+      from(Keyword,
+        order_by: [desc: :inserted_at],
+        limit: 20
+      )
+
+    Repo.all(query)
+  end
+
   def list_by_user(user_id) do
     # TODO: Pagination
     query =
