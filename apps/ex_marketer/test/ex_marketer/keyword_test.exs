@@ -43,7 +43,7 @@ defmodule ExMarketer.KeywordTest do
 
   describe "given valid attributes" do
     test "changeset/2 returns true" do
-      user = user_fixture()
+      user = insert(:user)
 
       assert Keyword.changeset(%Keyword{}, %{keyword: "grammarly", user_id: user.id}).valid? ===
                true
