@@ -2,12 +2,16 @@ defmodule ExMarketer.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias ExMarketer.Keyword
+
   @derive {Inspect, except: [:password]}
   schema "users" do
-    field :email, :string
-    field :password, :string, virtual: true
-    field :hashed_password, :string
-    field :confirmed_at, :naive_datetime
+    field(:email, :string)
+    field(:password, :string, virtual: true)
+    field(:hashed_password, :string)
+    field(:confirmed_at, :naive_datetime)
+
+    has_many(:keywords, Keyword)
 
     timestamps()
   end
