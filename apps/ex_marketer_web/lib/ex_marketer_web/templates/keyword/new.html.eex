@@ -13,6 +13,6 @@
 	</div>
 
 	<div class="col col-8">
-		<%= link gettext("download_example_csv"), to: Routes.static_path(@conn, "/template.csv"), class: "btn btn-info" %>
+		<%= link gettext("download_example_csv"), to: "/template.csv", class: "btn btn-info" %>
 	</div>
 </div>
