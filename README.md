@@ -1,6 +1,4 @@
-![CI](https://github.com/anduonghien/ex_marketer/workflows/CI/badge.svg)
-
-![CD](https://github.com/anduonghien/ex_marketer/workflows/CD/badge.svg)
+![CI](https://github.com/anduonghien/ex_marketer/workflows/CI/badge.svg?branch=development)
 
 ## Setup
 
