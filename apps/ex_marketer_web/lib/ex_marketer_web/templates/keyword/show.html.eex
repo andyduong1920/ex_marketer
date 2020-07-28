@@ -1,12 +1,4 @@
 <div class="keyword-details">
-	<div class="row my-3">
-		<div class="col col-12">
-			<%= link gettext("back_to_dashboard"), to: Routes.keyword_path(@conn, :index), class: "btn btn-sm btn-primary" %>
-		</div>
-	</div>
-
-	<hr/>
-
 	<div class="row">
 		<div class="col col-12">
 			<div>

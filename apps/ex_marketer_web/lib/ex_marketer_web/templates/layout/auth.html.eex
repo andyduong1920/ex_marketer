@@ -9,7 +9,7 @@
 		<script defer type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
 	</head>
 
-	<body>
+	<body class="auth-layout">
 		<main role="main" class="container">
 			<%= render "_user_menu.html", assigns %>
 			<%= if get_flash(@conn, :info) do %>
@@ -20,7 +20,13 @@
 				<p class="alert alert-danger my-3" role="alert"><%= get_flash(@conn, :error) %></p>
 			<% end %>
 
-			<%= @inner_content %>
+			<div class="content">
+				<div class="col-5 card">
+					<div class="card-body">
+						<%= @inner_content %>
+					</div>
+				</div>
+			</div>
 		</main>
 	</body>
 </html>

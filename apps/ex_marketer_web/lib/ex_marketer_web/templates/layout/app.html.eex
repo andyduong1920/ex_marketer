@@ -9,7 +9,7 @@
 		<script defer type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
 	</head>
 
-	<body>
+	<body class="app-layout">
 		<main role="main" class="container">
 			<%= render "_user_menu.html", assigns %>
 			<%= if get_flash(@conn, :info) do %>
