@@ -1,4 +1,4 @@
-defmodule ExMarketerWeb.UserConfirmationControllerTest do
+defmodule ExMarketerWeb.Accounts.UserConfirmationControllerTest do
   use ExMarketerWeb.ConnCase, async: true
 
   alias ExMarketer.Accounts

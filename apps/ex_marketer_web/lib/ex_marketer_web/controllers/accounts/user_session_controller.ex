@@ -1,8 +1,8 @@
-defmodule ExMarketerWeb.UserSessionController do
+defmodule ExMarketerWeb.Accounts.UserSessionController do
   use ExMarketerWeb, :controller
 
   alias ExMarketer.Accounts
-  alias ExMarketerWeb.UserAuth
+  alias ExMarketerWeb.Accounts.UserAuth
 
   def new(conn, _params) do
     render(conn, "new.html", error_message: nil)

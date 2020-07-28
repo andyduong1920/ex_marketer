@@ -1,4 +1,4 @@
-defmodule ExMarketerWeb.UserSessionControllerTest do
+defmodule ExMarketerWeb.Accounts.UserSessionControllerTest do
   use ExMarketerWeb.ConnCase, async: true
 
   import ExMarketer.AccountsFactory

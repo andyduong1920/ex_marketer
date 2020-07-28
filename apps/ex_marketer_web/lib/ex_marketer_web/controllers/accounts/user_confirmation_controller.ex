@@ -1,4 +1,4 @@
-defmodule ExMarketerWeb.UserConfirmationController do
+defmodule ExMarketerWeb.Accounts.UserConfirmationController do
   use ExMarketerWeb, :controller
 
   alias ExMarketer.Accounts

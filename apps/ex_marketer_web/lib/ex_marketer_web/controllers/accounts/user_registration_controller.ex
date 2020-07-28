@@ -1,9 +1,9 @@
-defmodule ExMarketerWeb.UserRegistrationController do
+defmodule ExMarketerWeb.Accounts.UserRegistrationController do
   use ExMarketerWeb, :controller
 
   alias ExMarketer.Accounts
   alias ExMarketer.Accounts.User
-  alias ExMarketerWeb.UserAuth
+  alias ExMarketerWeb.Accounts.UserAuth
 
   def new(conn, _params) do
     changeset = Accounts.change_user_registration(%User{})

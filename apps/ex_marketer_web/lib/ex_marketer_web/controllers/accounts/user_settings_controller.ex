@@ -1,8 +1,8 @@
-defmodule ExMarketerWeb.UserSettingsController do
+defmodule ExMarketerWeb.Accounts.UserSettingsController do
   use ExMarketerWeb, :controller
 
   alias ExMarketer.Accounts
-  alias ExMarketerWeb.UserAuth
+  alias ExMarketerWeb.Accounts.UserAuth
 
   plug :assign_email_and_password_changesets
 

@@ -1,4 +1,4 @@
-defmodule ExMarketerWeb.UserResetPasswordController do
+defmodule ExMarketerWeb.Accounts.UserResetPasswordController do
   use ExMarketerWeb, :controller
 
   alias ExMarketer.Accounts

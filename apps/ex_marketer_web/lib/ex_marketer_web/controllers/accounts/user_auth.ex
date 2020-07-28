@@ -1,4 +1,4 @@
-defmodule ExMarketerWeb.UserAuth do
+defmodule ExMarketerWeb.Accounts.UserAuth do
   import Plug.Conn
   import Phoenix.Controller
 
