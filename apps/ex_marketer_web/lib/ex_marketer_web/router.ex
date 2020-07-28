@@ -16,6 +16,10 @@ defmodule ExMarketerWeb.Router do
     plug(:accepts, ["json"])
   end
 
+  pipeline :auth_layout do
+    plug(:put_layout, {ExMarketerWeb.LayoutView, :auth})
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", ExMarketerWeb do
   #   pipe_through :api
@@ -40,38 +44,38 @@ defmodule ExMarketerWeb.Router do
   ## Authentication routes
 
   scope "/", ExMarketerWeb do
-    pipe_through [:browser, :redirect_if_user_is_authenticated]
+    pipe_through([:browser, :redirect_if_user_is_authenticated, :auth_layout])
 
-    get "/register", Accounts.UserRegistrationController, :new
-    post "/register", Accounts.UserRegistrationController, :create
-    get "/login", Accounts.UserSessionController, :new
-    post "/login", Accounts.UserSessionController, :create
-    get "/reset_password", Accounts.UserResetPasswordController, :new
-    post "/reset_password", Accounts.UserResetPasswordController, :create
-    get "/reset_password/:token", Accounts.UserResetPasswordController, :edit
-    put "/reset_password/:token", Accounts.UserResetPasswordController, :update
+    get("/register", Accounts.UserRegistrationController, :new)
+    post("/register", Accounts.UserRegistrationController, :create)
+    get("/login", Accounts.UserSessionController, :new)
+    post("/login", Accounts.UserSessionController, :create)
+    get("/reset_password", Accounts.UserResetPasswordController, :new)
+    post("/reset_password", Accounts.UserResetPasswordController, :create)
+    get("/reset_password/:token", Accounts.UserResetPasswordController, :edit)
+    put("/reset_password/:token", Accounts.UserResetPasswordController, :update)
   end
 
   scope "/", ExMarketerWeb do
-    pipe_through [:browser, :require_authenticated_user]
+    pipe_through([:browser, :require_authenticated_user])
 
-    get "/settings", Accounts.UserSettingsController, :edit
-    put "/settings/update_password", Accounts.UserSettingsController, :update_password
-    put "/settings/update_email", Accounts.UserSettingsController, :update_email
-    get "/settings/confirm_email/:token", Accounts.UserSettingsController, :confirm_email
+    get("/settings", Accounts.UserSettingsController, :edit)
+    put("/settings/update_password", Accounts.UserSettingsController, :update_password)
+    put("/settings/update_email", Accounts.UserSettingsController, :update_email)
+    get("/settings/confirm_email/:token", Accounts.UserSettingsController, :confirm_email)
 
     resources("/keywords", KeywordController, only: [:show, :index, :new, :create])
     resources("/pages", PageController, only: [:show])
   end
 
   scope "/", ExMarketerWeb do
-    pipe_through [:browser]
+    pipe_through([:browser])
 
     get("/", HomeController, :index)
 
-    delete "/log_out", Accounts.UserSessionController, :delete
-    get "/confirm", Accounts.UserConfirmationController, :new
-    post "/confirm", Accounts.UserConfirmationController, :create
-    get "/confirm/:token", Accounts.UserConfirmationController, :confirm
+    delete("/log_out", Accounts.UserSessionController, :delete)
+    get("/confirm", Accounts.UserConfirmationController, :new)
+    post("/confirm", Accounts.UserConfirmationController, :create)
+    get("/confirm/:token", Accounts.UserConfirmationController, :confirm)
   end
 end

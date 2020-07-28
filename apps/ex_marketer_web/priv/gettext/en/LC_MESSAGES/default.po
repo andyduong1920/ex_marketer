@@ -63,3 +63,6 @@ msgstr "Upload"
 
 msgid "upload_success"
 msgstr "The keys are uploaded successfully"
+
+msgid "welcome"
+msgstr "An Advertising - Reports platform build on Elixir and Phoenix"
