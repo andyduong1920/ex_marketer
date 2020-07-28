@@ -4,11 +4,12 @@ defmodule ExMarketerWeb.KeywordControllerTest do
   setup :register_and_log_in_user
 
   describe "given the keyword that existing in the database" do
-    test "GET /keywords", %{conn: conn} do
-      insert(:keyword, keyword: "Keyword 1", status: "created")
-      insert(:keyword, keyword: "Keyword 2", status: "in_progress")
-      insert(:keyword, keyword: "Keyword 3", status: "failed")
-      insert(:keyword, keyword: "Keyword 4", status: "successed")
+    test "GET /keywords", %{conn: conn, user: user} do
+      insert(:keyword, user: user, keyword: "Keyword 1", status: "created")
+      insert(:keyword, user: user, keyword: "Keyword 2", status: "in_progress")
+      insert(:keyword, user: user, keyword: "Keyword 3", status: "failed")
+      insert(:keyword, user: user, keyword: "Keyword 4", status: "successed")
+      insert(:keyword, user: insert(:user), keyword: "Another user keyword")
 
       conn = get(conn, Routes.keyword_path(conn, :index))
 
@@ -22,6 +23,7 @@ defmodule ExMarketerWeb.KeywordControllerTest do
       assert html_response(conn, 200) =~ "class=\"card card-keyword card-keyword--successed\""
       assert html_response(conn, 200) =~ gettext("view_details")
       assert html_response(conn, 200) =~ gettext("view_page")
+      refute html_response(conn, 200) =~ "Another user keyword"
     end
 
     test "GET /keywords/:id", %{conn: conn, user: user} do

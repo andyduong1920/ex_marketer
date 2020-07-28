@@ -12,17 +12,23 @@ defmodule ExMarketer.KeywordTest do
            }
   end
 
-  test "all/0 returns all Keyword records ordered with inserted_at DESC" do
+  test "list_by_user/0 returns all Keyword records ordered with inserted_at DESC" do
     current_time = DateTime.utc_now()
-    first_keyword = insert(:keyword, inserted_at: current_time)
-    second_keyword = insert(:keyword, inserted_at: DateTime.add(current_time, 3))
 
-    result = Keyword.all()
+    user_1 = insert(:user)
+    keyword_1 = insert(:keyword, user: user_1, inserted_at: current_time)
+    keyword_2 = insert(:keyword, user: user_1, inserted_at: DateTime.add(current_time, 3))
+
+    user_2 = insert(:user)
+    insert(:keyword, user: user_2, inserted_at: current_time)
+    insert(:keyword, user: user_2, inserted_at: DateTime.add(current_time, 3))
+
+    result = Keyword.list_by_user(user_1.id)
 
     assert is_list(result)
     assert result |> Enum.count() === 2
-    assert (result |> Enum.at(0)).id == second_keyword.id
-    assert (result |> Enum.at(1)).id == first_keyword.id
+    assert (result |> Enum.at(0)).id == keyword_2.id
+    assert (result |> Enum.at(1)).id == keyword_1.id
   end
 
   describe "given an id that exists in the database" do
