@@ -1,3 +1,7 @@
+![CI](https://github.com/anduonghien/ex_marketer/workflows/CI/badge.svg)
+
+![CD](https://github.com/anduonghien/ex_marketer/workflows/CD/badge.svg)
+
 ## Setup
 
 1/ Install Docker
