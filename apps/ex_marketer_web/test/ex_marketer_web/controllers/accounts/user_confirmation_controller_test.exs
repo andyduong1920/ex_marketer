@@ -3,10 +3,9 @@ defmodule ExMarketerWeb.Accounts.UserConfirmationControllerTest do
 
   alias ExMarketer.Accounts
   alias ExMarketer.Repo
-  import ExMarketer.AccountsFactory
 
   setup do
-    %{user: user_fixture()}
+    %{user: insert(:user)}
   end
 
   describe "GET /users/confirm" do

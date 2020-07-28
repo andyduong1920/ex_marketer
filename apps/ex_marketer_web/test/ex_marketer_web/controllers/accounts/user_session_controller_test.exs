@@ -1,10 +1,8 @@
 defmodule ExMarketerWeb.Accounts.UserSessionControllerTest do
   use ExMarketerWeb.ConnCase, async: true
 
-  import ExMarketer.AccountsFactory
-
   setup do
-    %{user: user_fixture()}
+    %{user: insert(:user)}
   end
 
   describe "GET /users/log_in" do

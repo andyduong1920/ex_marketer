@@ -3,7 +3,6 @@ defmodule ExMarketerWeb.Accounts.UserAuthTest do
 
   alias ExMarketer.Accounts
   alias ExMarketerWeb.Accounts.UserAuth
-  import ExMarketer.AccountsFactory
 
   setup %{conn: conn} do
     conn =
@@ -11,7 +10,7 @@ defmodule ExMarketerWeb.Accounts.UserAuthTest do
       |> Map.replace!(:secret_key_base, ExMarketerWeb.Endpoint.config(:secret_key_base))
       |> init_test_session(%{})
 
-    %{user: user_fixture(), conn: conn}
+    %{user: insert(:user), conn: conn}
   end
 
   describe "log_in_user/3" do

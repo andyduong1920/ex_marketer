@@ -1,8 +1,6 @@
 defmodule ExMarketerWeb.UploadKeywordTest do
   use ExMarketerWeb.FeatureCase, async: true
 
-  alias ExMarketer.AccountsFactory
-
   @path Routes.keyword_path(ExMarketerWeb.Endpoint, :new)
 
   @selectors %{
@@ -11,10 +9,10 @@ defmodule ExMarketerWeb.UploadKeywordTest do
   }
 
   feature "upload keyword", %{session: session} do
-    user = AccountsFactory.user_fixture()
+    user = insert(:user)
 
     session
-    |> login(user.email, AccountsFactory.valid_user_password())
+    |> login(user.email, valid_user_password())
     |> visit(@path)
     |> attach_file(Query.file_field(@selectors.keyword_file_field),
       path: "test/fixture/template.csv"
