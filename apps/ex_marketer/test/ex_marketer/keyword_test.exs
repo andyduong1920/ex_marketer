@@ -21,8 +21,8 @@ defmodule ExMarketer.KeywordTest do
 
     assert is_list(result)
     assert result |> Enum.count() === 2
-    assert result |> Enum.at(0) == second_keyword
-    assert result |> Enum.at(1) == first_keyword
+    assert (result |> Enum.at(0)).id == second_keyword.id
+    assert (result |> Enum.at(1)).id == first_keyword.id
   end
 
   describe "given an id that exists in the database" do
@@ -43,7 +43,10 @@ defmodule ExMarketer.KeywordTest do
 
   describe "given valid attributes" do
     test "changeset/2 returns true" do
-      assert Keyword.changeset(%Keyword{}, %{keyword: "grammarly"}).valid? === true
+      user = user_fixture()
+
+      assert Keyword.changeset(%Keyword{}, %{keyword: "grammarly", user_id: user.id}).valid? ===
+               true
     end
 
     test "upload_keyword_changeset/1 returns true" do
@@ -69,11 +72,11 @@ defmodule ExMarketer.KeywordTest do
 
   test "update!/2 update the record" do
     record = insert(:keyword)
-    Keyword.update!(record, %{keyword: "developer"})
+    Keyword.update!(record, %{status: "successed"})
 
     result = Keyword.find(record.id)
 
-    assert result.keyword() === "developer"
+    assert result.status() === "successed"
   end
 
   describe "given a successed status" do

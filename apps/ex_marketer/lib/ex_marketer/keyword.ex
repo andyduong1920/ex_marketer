@@ -53,7 +53,7 @@ defmodule ExMarketer.Keyword do
 
   def update!(%Keyword{} = keyword, attrs \\ %{}) do
     keyword
-    |> changeset(attrs)
+    |> update_changeset(attrs)
     |> Repo.update!()
   end
 
@@ -64,7 +64,14 @@ defmodule ExMarketer.Keyword do
   def changeset(%Keyword{} = keyword, attrs) do
     keyword
     |> cast(attrs, [:keyword, :status, :result, :failure_reason, :user_id])
-    |> validate_required(:keyword, :user_id)
+    |> validate_required([:keyword, :user_id])
+    |> validate_inclusion(:status, Map.values(@statues))
+    |> assoc_constraint(:user)
+  end
+
+  def update_changeset(keyword, attrs) do
+    keyword
+    |> cast(attrs, [:status, :result, :failure_reason])
     |> validate_inclusion(:status, Map.values(@statues))
   end
 

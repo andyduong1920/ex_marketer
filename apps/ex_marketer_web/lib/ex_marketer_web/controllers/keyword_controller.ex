@@ -31,8 +31,10 @@ defmodule ExMarketerWeb.KeywordController do
     changeset = Keyword.upload_keyword_changeset(keyword_params)
 
     if changeset.valid? do
+      user = conn.assigns.current_user
+
       CsvParser.stream_parse(keyword_params["file"].path)
-      |> Enum.map(&TaskSupervisor.start_chilld(&1))
+      |> Enum.map(&TaskSupervisor.start_chilld(&1, user.id))
 
       conn
       |> put_flash(:info, gettext("upload_success"))

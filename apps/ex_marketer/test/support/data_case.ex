@@ -24,6 +24,7 @@ defmodule ExMarketer.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import ExMarketer.DataCase
+      import ExMarketer.AccountsFactory
       import ExMarketer.Factory
     end
   end

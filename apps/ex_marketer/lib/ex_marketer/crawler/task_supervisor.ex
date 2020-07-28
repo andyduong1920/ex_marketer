@@ -2,12 +2,12 @@ defmodule ExMarketer.Crawler.TaskSupervisor do
   alias ExMarketer.Keyword
   alias ExMarketer.Crawler.Worker
 
-  def start_chilld(keywords) when is_list(keywords) do
-    keywords |> Enum.map(&start_chilld(&1))
+  def start_chilld(keywords, user_id) when is_list(keywords) do
+    keywords |> Enum.map(&start_chilld(&1, user_id))
   end
 
-  def start_chilld(keyword) when is_binary(keyword) do
-    {:ok, record} = Keyword.create(%{keyword: keyword})
+  def start_chilld(keyword, user_id) when is_binary(keyword) do
+    {:ok, record} = Keyword.create(%{keyword: keyword, user_id: user_id})
 
     Task.Supervisor.start_child(
       ExMarketer.TaskSupervisor,
