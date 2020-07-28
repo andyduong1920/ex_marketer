@@ -8,7 +8,7 @@ defmodule ExMarketerWeb.Accounts.UserRegistrationControllerTest do
       conn = get(conn, Routes.user_registration_path(conn, :new))
       response = html_response(conn, 200)
       assert response =~ "<h1>Register</h1>"
-      assert response =~ "Log in</a>"
+      assert response =~ "Login</a>"
       assert response =~ "Register</a>"
     end
 
@@ -35,8 +35,9 @@ defmodule ExMarketerWeb.Accounts.UserRegistrationControllerTest do
       conn = get(conn, "/")
       response = html_response(conn, 200)
       assert response =~ email
-      assert response =~ "Settings</a>"
-      assert response =~ "Log out</a>"
+      assert response =~ "Upload Keyword</a>"
+      assert response =~ "Keywords</a>"
+      assert response =~ "Logout</a>"
     end
 
     test "render errors for invalid data", %{conn: conn} do

@@ -1,6 +1,8 @@
 defmodule ExMarketerWeb.PageControllerTest do
   use ExMarketerWeb.ConnCase, async: true
 
+  setup :register_and_log_in_user
+
   describe "given the keyword that existing in the database" do
     test "GET /pages/:existing_id", %{conn: conn} do
       successed_keyword = insert(:keyword, status: "successed")

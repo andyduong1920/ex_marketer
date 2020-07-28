@@ -8,11 +8,11 @@ defmodule ExMarketerWeb.Accounts.UserSessionControllerTest do
   end
 
   describe "GET /users/log_in" do
-    test "renders log in page", %{conn: conn} do
+    test "renders Login page", %{conn: conn} do
       conn = get(conn, Routes.user_session_path(conn, :new))
       response = html_response(conn, 200)
-      assert response =~ "<h1>Log in</h1>"
-      assert response =~ "Log in</a>"
+      assert response =~ "<h1>Login</h1>"
+      assert response =~ "Login</a>"
       assert response =~ "Register</a>"
     end
 
@@ -36,8 +36,9 @@ defmodule ExMarketerWeb.Accounts.UserSessionControllerTest do
       conn = get(conn, "/")
       response = html_response(conn, 200)
       assert response =~ user.email
-      assert response =~ "Settings</a>"
-      assert response =~ "Log out</a>"
+      assert response =~ "Upload Keyword</a>"
+      assert response =~ "Keywords</a>"
+      assert response =~ "Logout</a>"
     end
 
     test "logs the user in with remember me", %{conn: conn, user: user} do
@@ -61,7 +62,7 @@ defmodule ExMarketerWeb.Accounts.UserSessionControllerTest do
         })
 
       response = html_response(conn, 200)
-      assert response =~ "<h1>Log in</h1>"
+      assert response =~ "<h1>Login</h1>"
       assert response =~ "Invalid e-mail or password"
     end
   end

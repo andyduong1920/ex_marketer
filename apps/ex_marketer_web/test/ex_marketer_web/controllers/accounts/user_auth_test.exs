@@ -1,8 +1,8 @@
-defmodule ExMarketerWeb.UserAuthTest do
+defmodule ExMarketerWeb.Accounts.UserAuthTest do
   use ExMarketerWeb.ConnCase, async: true
 
   alias ExMarketer.Accounts
-  alias ExMarketerWeb.UserAuth
+  alias ExMarketerWeb.Accounts.UserAuth
   import ExMarketer.AccountsFactory
 
   setup %{conn: conn} do
