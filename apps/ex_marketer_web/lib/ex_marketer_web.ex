@@ -31,6 +31,14 @@ defmodule ExMarketerWeb do
         |> put_view(ExMarketerWeb.ErrorView)
         |> render(:"404")
       end
+
+      defp keyword_displayable?(conn, keyword) do
+        current_user = conn.assigns.current_user
+
+        !is_nil(keyword) &&
+          ExMarketer.Keyword.successed?(keyword) &&
+          keyword.user_id === current_user.id
+      end
     end
   end
 

@@ -24,22 +24,27 @@ defmodule ExMarketerWeb.KeywordControllerTest do
       assert html_response(conn, 200) =~ gettext("view_page")
     end
 
-    test "GET /keywords/:id", %{conn: conn} do
-      successed_keyword = insert(:keyword, keyword: "Example keyword", status: "successed")
-      in_progress_keyword = insert(:keyword, status: "in_progress")
-      failed_keyword = insert(:keyword, status: "failed")
-      created_keyword = insert(:keyword, status: "created")
+    test "GET /keywords/:id", %{conn: conn, user: user} do
+      successed_keyword =
+        insert(:keyword, keyword: "Example keyword", status: "successed", user: user)
+
+      in_progress_keyword = insert(:keyword, status: "in_progress", user: user)
+      failed_keyword = insert(:keyword, status: "failed", user: user)
+      created_keyword = insert(:keyword, status: "created", user: user)
+      another_successed_keyword = insert(:keyword, status: "successed", user: insert(:user))
 
       conn_1 = get(conn, Routes.keyword_path(conn, :show, successed_keyword.id))
       conn_2 = get(conn, Routes.keyword_path(conn, :show, in_progress_keyword.id))
       conn_3 = get(conn, Routes.keyword_path(conn, :show, failed_keyword.id))
       conn_4 = get(conn, Routes.keyword_path(conn, :show, created_keyword.id))
+      conn_5 = get(conn, Routes.keyword_path(conn, :show, another_successed_keyword.id))
 
       assert html_response(conn_1, 200) =~ "Example keyword"
       assert html_response(conn_1, 200) =~ "class=\"keyword-details\""
       assert html_response(conn_2, 404) =~ "Not Found"
       assert html_response(conn_3, 404) =~ "Not Found"
       assert html_response(conn_4, 404) =~ "Not Found"
+      assert html_response(conn_5, 404) =~ "Not Found"
     end
   end
 

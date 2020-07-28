@@ -14,7 +14,7 @@ defmodule ExMarketerWeb.KeywordController do
   def show(conn, %{"id" => id}) do
     keyword = Keyword.find(id)
 
-    if !is_nil(keyword) && Keyword.successed?(keyword) do
+    if keyword_displayable?(conn, keyword) do
       render(conn, "show.html", keyword: keyword)
     else
       render_404(conn)
