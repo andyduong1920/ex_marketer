@@ -7,9 +7,10 @@
 		<title>ExMarketer</title>
 		<link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
 		<script defer type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
+		<script>window.userSocketToken = "<%= assigns[:user_socket_token] %>";</script>
 	</head>
 
-	<body class="app-layout">
+	<body class="app-layout <%= authentication_class(assigns[:current_user]) %>">
 		<main role="main" class="container">
 			<%= render "_user_menu.html", assigns %>
 			<%= if get_flash(@conn, :info) do %>

@@ -33,7 +33,14 @@ defmodule ExMarketerWeb.Accounts.UserAuth do
     |> put_session(:user_token, token)
     |> put_session(:live_socket_id, "users_sessions:#{Base.url_encode64(token)}")
     |> maybe_write_remember_me_cookie(token, params)
+    |> broadcast_to_lobby_room_channel(user.id, user.email)
     |> redirect(to: user_return_to || signed_in_path(conn))
+  end
+
+  defp broadcast_to_lobby_room_channel(conn, user_id, user_email) do
+    ExMarketerWeb.Endpoint.broadcast!("room:lobby", "user_joined", %{id: user_id, email: user_email})
+
+    conn
   end
 
   defp maybe_write_remember_me_cookie(conn, token, %{"remember_me" => "true"}) do
