@@ -5,4 +5,6 @@ import "../css/app.scss";
 
 import "phoenix_html";
 
-import "./initializers/socket";
+import "./vendor/bootstrap";
+
+import "./initializers";

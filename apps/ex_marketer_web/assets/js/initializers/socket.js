@@ -1,5 +1,5 @@
 import socket from "../components/socket";
-import LobbyRoomChannel from "../components/lobby_room_channel";
+import LobbyRoomChannel from "../components/lobbyRoomChannel";
 
 const SELECTOR = {
   appLayout: "body.app-layout.authenticated",
