@@ -12,7 +12,7 @@
 	</head>
 
 	<body class="app-layout <%= authentication_class(@current_user) %> <%= formatted_controller_name(@controller) %> <%= formatted_action_name(@action) %>">
-		<main role="main" class="container">
+		<main role="main" class="container-fluid">
 			<%= render "_user_menu.html", assigns %>
 			<%= if get_flash(@conn, :info) do %>
 				<p class="alert alert-info my-3" role="alert"><%= get_flash(@conn, :info) %></p>

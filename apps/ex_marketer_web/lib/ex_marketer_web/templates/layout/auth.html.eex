@@ -10,7 +10,7 @@
 	</head>
 
 	<body class="auth-layout">
-		<main role="main" class="container">
+		<main role="main" class="container-fluid">
 			<%= render "_user_menu.html", assigns %>
 			<%= if get_flash(@conn, :info) do %>
 				<p class="alert alert-info my-3" role="alert"><%= get_flash(@conn, :info) %></p>
@@ -21,7 +21,7 @@
 			<% end %>
 
 			<div class="content">
-				<div class="col-5 card">
+				<div class="col-8 col-md-5 card">
 					<div class="card-body">
 						<%= @inner_content %>
 					</div>
