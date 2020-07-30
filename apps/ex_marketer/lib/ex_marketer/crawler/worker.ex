@@ -2,6 +2,7 @@ defmodule ExMarketer.Crawler.Worker do
   alias ExMarketer.Keyword
   alias ExMarketer.Crawler.Request
   alias ExMarketer.Crawler.Parse
+  alias Phoenix.PubSub
 
   def perform(keyword_id, keyword) do
     on_start(keyword_id)
@@ -27,20 +28,26 @@ defmodule ExMarketer.Crawler.Worker do
   end
 
   defp on_complete(keyword_id, result) do
-    keyword_id
-    |> find_keyword
+    keyword = find_keyword(keyword_id)
+
+    keyword
     |> Keyword.update!(%{status: Keyword.statues().successed, result: Map.from_struct(result)})
 
-    # TODO: Broadcast to Phoenix Channel
+    PubSub.broadcast!(ExMarketer.PubSub, "user:#{keyword.user_id}", {:keyword_successed, %{keyword_id: keyword_id}})
+
     :ok
   end
 
   defp on_fail(keyword_id, ex) do
     %MatchError{term: {:error, error_message}} = ex
 
-    keyword_id
-    |> find_keyword
+    keyword = find_keyword(keyword_id)
+
+    keyword
     |> Keyword.update!(%{status: Keyword.statues().failed, failure_reason: error_message})
+
+
+    PubSub.broadcast!(ExMarketer.PubSub, "user:#{keyword.user_id}", {:keyword_fail, %{keyword_id: keyword_id}})
 
     :error
   end

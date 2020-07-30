@@ -8,3 +8,4 @@ import "phoenix_html";
 import "./vendor/bootstrap";
 
 import "./initializers";
+import "./screens";

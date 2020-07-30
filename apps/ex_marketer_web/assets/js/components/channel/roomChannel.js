@@ -1,4 +1,4 @@
-import socket from "./socket";
+import socket from "../socket";
 import { Alert } from "bootstrap.native/dist/bootstrap-native";
 
 const SELECTOR = {
@@ -6,7 +6,7 @@ const SELECTOR = {
   alert: ".alert",
 };
 
-class LobbyRoomChannel {
+class RoomChannel {
   constructor() {
     this.channel = socket.channel(`room:lobby`, {});
     this.notification = document.querySelector(SELECTOR.notification);
@@ -52,4 +52,4 @@ class LobbyRoomChannel {
   }
 }
 
-export default LobbyRoomChannel;
+export default RoomChannel;

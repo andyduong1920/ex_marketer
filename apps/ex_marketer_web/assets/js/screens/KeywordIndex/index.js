@@ -1,13 +1,13 @@
-import socket from "../components/socket";
+import UserChannel from "../../components/channel/userChannel";
 
 const SELECTOR = {
-  appLayout: "body.app-layout.authenticated",
+  appLayout: "body.app-layout.authenticated.KeywordController.index",
 };
 
 document.addEventListener("DOMContentLoaded", () => {
   const isAppLayout = document.querySelector(SELECTOR.appLayout) !== null;
 
   if (isAppLayout) {
-    socket.connect();
+    new UserChannel();
   }
 });

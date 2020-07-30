@@ -8,4 +8,14 @@ defmodule ExMarketerWeb.LayoutView do
       "authenticated"
     end
   end
+
+  def formatted_controller_name(controller) do
+    Atom.to_string(controller)
+    |> String.split(".")
+    |> List.last
+  end
+
+  def formatted_action_name(action) do
+    Atom.to_string(action)
+  end
 end
