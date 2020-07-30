@@ -9,6 +9,12 @@ defmodule ExMarketerWeb.LayoutView do
     end
   end
 
+  def user_id(current_user) do
+    unless is_nil(current_user) do
+      current_user.id
+    end
+  end
+
   def formatted_controller_name(controller) do
     Atom.to_string(controller)
     |> String.split(".")
