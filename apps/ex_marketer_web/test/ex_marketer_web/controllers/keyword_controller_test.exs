@@ -17,10 +17,10 @@ defmodule ExMarketerWeb.KeywordControllerTest do
       assert html_response(conn, 200) =~ "Keyword 2 - #{gettext("in_progress")}"
       assert html_response(conn, 200) =~ "Keyword 3 - #{gettext("failed")}"
       assert html_response(conn, 200) =~ "Keyword 4 - #{gettext("successed")}"
-      assert html_response(conn, 200) =~ "class=\"card card-keyword card-keyword--created\""
-      assert html_response(conn, 200) =~ "class=\"card card-keyword card-keyword--in_progress\""
-      assert html_response(conn, 200) =~ "class=\"card card-keyword card-keyword--failed\""
-      assert html_response(conn, 200) =~ "class=\"card card-keyword card-keyword--successed\""
+      assert html_response(conn, 200) =~ "class=\"card card-keyword card-keyword--created"
+      assert html_response(conn, 200) =~ "class=\"card card-keyword card-keyword--in_progress"
+      assert html_response(conn, 200) =~ "class=\"card card-keyword card-keyword--failed"
+      assert html_response(conn, 200) =~ "class=\"card card-keyword card-keyword--successed"
       assert html_response(conn, 200) =~ gettext("view_details")
       assert html_response(conn, 200) =~ gettext("view_page")
       refute html_response(conn, 200) =~ "Another user keyword"
