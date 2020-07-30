@@ -12,7 +12,7 @@ defmodule ExMarketerWeb.LayoutView do
   def formatted_controller_name(controller) do
     Atom.to_string(controller)
     |> String.split(".")
-    |> List.last
+    |> List.last()
   end
 
   def formatted_action_name(action) do

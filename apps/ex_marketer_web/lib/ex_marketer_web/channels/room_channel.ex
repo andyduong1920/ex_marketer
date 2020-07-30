@@ -7,6 +7,7 @@ defmodule ExMarketerWeb.RoomChannel do
     {:ok, socket}
   end
 
+  # Listen from Phoenix.Socket.Broadcast
   def handle_out("user_joined", params, socket) do
     unless socket.assigns[:current_user_id] === params.id do
       push(socket, "user_joined", %{email: params.email})

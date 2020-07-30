@@ -38,7 +38,10 @@ defmodule ExMarketerWeb.Accounts.UserAuth do
   end
 
   defp broadcast_to_lobby_room_channel(conn, user_id, user_email) do
-    ExMarketerWeb.Endpoint.broadcast!("room:lobby", "user_joined", %{id: user_id, email: user_email})
+    ExMarketerWeb.Endpoint.broadcast!("room:lobby", "user_joined", %{
+      id: user_id,
+      email: user_email
+    })
 
     conn
   end

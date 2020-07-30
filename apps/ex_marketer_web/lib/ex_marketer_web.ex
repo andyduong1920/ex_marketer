@@ -29,8 +29,8 @@ defmodule ExMarketerWeb do
 
       def assign_controller_action_name(conn, _) do
         conn
-          |> assign(:controller, controller_module(conn))
-          |> assign(:action, action_name(conn))
+        |> assign(:controller, controller_module(conn))
+        |> assign(:action, action_name(conn))
       end
 
       def render_404(conn) do
