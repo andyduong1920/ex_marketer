@@ -1,4 +1,4 @@
-<div id="keyword-<%= @keyword.id %>" class="card card-keyword <%= recently_update_class(assigns[:recently_update]) %> %> card-keyword--<%= @keyword.status %>">
+<div id="keyword-<%= @keyword.id %>" class="card card-keyword <%= recently_update_class(assigns[:recently_update]) %> card-keyword--<%= @keyword.status %>">
   <div class="card-body">
     <h5 class="card-title">
       <%= @keyword.keyword %> - <%= localize_status(@keyword.status) %>
