@@ -28,6 +28,6 @@ defmodule ExMarketerWeb.UserChannel do
   defp build_keyword_view(keyword_id) do
     keyword = Keyword.find(keyword_id)
 
-    View.render_to_string(KeywordView, "_keyword.html", %{keyword: keyword})
+    View.render_to_string(KeywordView, "_keyword.html", %{keyword: keyword, recently_update: true})
   end
 end
