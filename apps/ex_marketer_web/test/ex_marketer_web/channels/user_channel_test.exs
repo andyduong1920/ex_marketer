@@ -4,8 +4,6 @@ defmodule ExMarketerWeb.UserChannelTest do
   alias ExMarketerWeb.UserSocket
   alias ExMarketerWeb.UserChannel
   alias ExMarketerWeb.KeywordView
-  alias Phoenix.PubSub
-  alias Phoenix.View
 
   setup do
     token = Phoenix.Token.sign(@endpoint, "user socket", 1)
@@ -24,7 +22,7 @@ defmodule ExMarketerWeb.UserChannelTest do
     keyword = insert(:keyword, id: 3)
     keyword_view = keyword_view(keyword)
 
-    PubSub.broadcast!(ExMarketer.PubSub, "user:1", {:keyword_completed, %{keyword_id: 3}})
+    Phoenix.PubSub.broadcast!(ExMarketer.PubSub, "user:1", {:keyword_completed, %{keyword_id: 3}})
 
     assert_push("keyword_completed", %{keyword_id: 3, keyword_view: ^keyword_view})
   end
@@ -33,13 +31,13 @@ defmodule ExMarketerWeb.UserChannelTest do
     keyword = insert(:keyword, id: 3)
     keyword_view = keyword_view(keyword)
 
-    PubSub.broadcast!(ExMarketer.PubSub, "user:2", {:keyword_completed, %{keyword_id: 3}})
+    Phoenix.PubSub.broadcast!(ExMarketer.PubSub, "user:2", {:keyword_completed, %{keyword_id: 3}})
 
     refute_push("keyword_completed", %{keyword_id: 3, keyword_view: ^keyword_view})
   end
 
   defp keyword_view(keyword) do
-    View.render_to_string(KeywordView, "_keyword.html", %{
+    Phoenix.View.render_to_string(KeywordView, "_keyword.html", %{
       keyword: keyword,
       recently_update: true
     })
