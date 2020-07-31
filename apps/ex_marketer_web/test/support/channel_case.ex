@@ -22,6 +22,7 @@ defmodule ExMarketerWeb.ChannelCase do
       # Import conveniences for testing with channels
       import Phoenix.ChannelTest
       import ExMarketerWeb.ChannelCase
+      import ExMarketerWeb.Factory
       import ExMarketerWeb.Gettext
 
       # The default endpoint for testing
