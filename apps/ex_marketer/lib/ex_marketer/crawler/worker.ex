@@ -2,7 +2,6 @@ defmodule ExMarketer.Crawler.Worker do
   alias ExMarketer.Keyword
   alias ExMarketer.Crawler.Request
   alias ExMarketer.Crawler.Parse
-  alias Phoenix.PubSub
 
   def perform(keyword_id, keyword) do
     on_start(keyword_id)
@@ -33,11 +32,7 @@ defmodule ExMarketer.Crawler.Worker do
     keyword
     |> Keyword.update!(%{status: Keyword.statues().successed, result: Map.from_struct(result)})
 
-    PubSub.broadcast!(
-      ExMarketer.PubSub,
-      "user:#{keyword.user_id}",
-      {:keyword_completed, %{keyword_id: keyword_id}}
-    )
+    broadcast_to_user(keyword.user_id, keyword_id)
 
     :ok
   end
@@ -50,16 +45,20 @@ defmodule ExMarketer.Crawler.Worker do
     keyword
     |> Keyword.update!(%{status: Keyword.statues().failed, failure_reason: error_message})
 
-    PubSub.broadcast!(
-      ExMarketer.PubSub,
-      "user:#{keyword.user_id}",
-      {:keyword_completed, %{keyword_id: keyword_id}}
-    )
+    broadcast_to_user(keyword.user_id, keyword_id)
 
     :error
   end
 
   defp find_keyword(keyword_id) do
     Keyword.find(keyword_id)
+  end
+
+  defp broadcast_to_user(user_id, keyword_id) do
+    Phoenix.PubSub.broadcast!(
+      ExMarketer.PubSub,
+      "user:#{user_id}",
+      {:keyword_completed, %{keyword_id: keyword_id}}
+    )
   end
 end
