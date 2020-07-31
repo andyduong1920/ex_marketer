@@ -18,20 +18,24 @@ defmodule ExMarketerWeb.UserChannelTest do
     assert {:error, :unauthorized} = socket |> join(UserChannel, "user:2")
   end
 
-  test "notices the user when the search keyowrd is completed" do
-    keyword = insert(:keyword, id: 3)
+  test "notices the user when the search keyowrd is completed", %{socket: socket} do
+    user = insert(:user, id: 1)
+    keyword = insert(:keyword, id: 3, user: user)
     keyword_view = keyword_view(keyword)
 
-    Phoenix.PubSub.broadcast!(ExMarketer.PubSub, "user:1", {:keyword_completed, %{keyword_id: 3}})
+    broadcast_from!(socket, "keyword_completed", %{keyword_id: 3})
 
     assert_push("keyword_completed", %{keyword_id: 3, keyword_view: ^keyword_view})
   end
 
-  test "does NOT notice the user when the other user\"s search keyowrd is completed" do
-    keyword = insert(:keyword, id: 3)
+  test "does NOT notice the user when the other user\"s search keyowrd is completed", %{
+    socket: socket
+  } do
+    user = insert(:user, id: 2)
+    keyword = insert(:keyword, id: 3, user: user)
     keyword_view = keyword_view(keyword)
 
-    Phoenix.PubSub.broadcast!(ExMarketer.PubSub, "user:2", {:keyword_completed, %{keyword_id: 3}})
+    broadcast_from!(socket, "keyword_completed", %{keyword_id: 3})
 
     refute_push("keyword_completed", %{keyword_id: 3, keyword_view: ^keyword_view})
   end
