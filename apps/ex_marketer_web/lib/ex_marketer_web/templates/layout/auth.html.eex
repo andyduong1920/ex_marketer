@@ -21,7 +21,7 @@
 			<% end %>
 
 			<div class="content">
-				<div class="col-8 col-md-5 card">
+				<div class="col-12 col-md-5 card">
 					<div class="card-body">
 						<%= @inner_content %>
 					</div>

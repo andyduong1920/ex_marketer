@@ -1,20 +1,26 @@
 import socket from "../socket";
+import { Presence } from "phoenix";
 import { Alert } from "bootstrap.native/dist/bootstrap-native";
 
 const SELECTOR = {
   notification: ".notification",
   alert: ".alert",
+  onlineUser: ".online-user ul",
 };
 
 class RoomChannel {
   constructor() {
     this.channel = socket.channel(`room:lobby`, {});
     this.notification = document.querySelector(SELECTOR.notification);
+    this.onlineUser = document.querySelector(SELECTOR.onlineUser);
+    this.presence = new Presence(this.channel);
 
     this._setup();
   }
 
   _setup() {
+    this.presence.onSync(() => this._renderOnlineUsers());
+
     this.channel
       .join()
       .receive("ok", (resp) => {
@@ -49,6 +55,20 @@ class RoomChannel {
       </button>
     </div>
     `;
+  }
+
+  _renderOnlineUsers() {
+    let listUserTemplare = "";
+
+    this.presence.list((id, { metas: metas }) => {
+      const item = metas[0];
+
+      listUserTemplare = listUserTemplare.concat(
+        `<li>${item.email} - ${item.last_seen_at}</li>`
+      );
+    });
+
+    this.onlineUser.innerHTML = listUserTemplare;
   }
 }
 

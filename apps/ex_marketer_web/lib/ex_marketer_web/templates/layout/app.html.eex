@@ -25,7 +25,22 @@
 			<div class="notification">
 			</div>
 
-			<%= @inner_content %>
+			<div class="row">
+				<div class="col col-9">
+					<%= @inner_content %>
+				</div>
+
+				<%= if @current_user do %>
+					<div class="col col-3">
+						<div class="online-user">
+							Online users
+
+							<ul>
+							</ul>
+						</div>
+					</div>
+				<% end %>
+			</div>
 		</main>
 	</body>
 </html>
