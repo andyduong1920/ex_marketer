@@ -1,46 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="utf-8"/>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-		<title>ExMarketer</title>
-		<link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
-		<script defer type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
-		<script>window.userSocketToken = "<%= assigns[:user_socket_token] %>";</script>
-		<script>window.userId = "<%= user_id(@current_user) %>";</script>
-	</head>
+<body class="app-layout <%= authentication_class(@current_user) %> <%= formatted_controller_name(@controller) %> <%= formatted_action_name(@action) %>">
+	<main role="main" class="container-fluid">
+		<%= render "_user_menu.html", assigns %>
+		<%= if get_flash(@conn, :info) do %>
+			<p class="alert alert-info my-3" role="alert"><%= get_flash(@conn, :info) %></p>
+		<% end %>
 
-	<body class="app-layout <%= authentication_class(@current_user) %> <%= formatted_controller_name(@controller) %> <%= formatted_action_name(@action) %>">
-		<main role="main" class="container-fluid">
-			<%= render "_user_menu.html", assigns %>
-			<%= if get_flash(@conn, :info) do %>
-				<p class="alert alert-info my-3" role="alert"><%= get_flash(@conn, :info) %></p>
-			<% end %>
+		<%= if get_flash(@conn, :error) do %>
+			<p class="alert alert-danger my-3" role="alert"><%= get_flash(@conn, :error) %></p>
+		<% end %>
 
-			<%= if get_flash(@conn, :error) do %>
-				<p class="alert alert-danger my-3" role="alert"><%= get_flash(@conn, :error) %></p>
-			<% end %>
+		<div class="notification">
+		</div>
 
-			<div class="notification">
+		<div class="row">
+			<div class="col col-9">
+				<%= @inner_content %>
 			</div>
 
-			<div class="row">
-				<div class="col col-9">
-					<%= @inner_content %>
-				</div>
+			<%= if @current_user do %>
+				<div class="col col-3">
+					<div class="online-user">
+						Online users
 
-				<%= if @current_user do %>
-					<div class="col col-3">
-						<div class="online-user">
-							Online users
-
-							<ul>
-							</ul>
-						</div>
+						<ul>
+						</ul>
 					</div>
-				<% end %>
-			</div>
-		</main>
-	</body>
-</html>
+				</div>
+			<% end %>
+		</div>
+	</main>
+</body>
