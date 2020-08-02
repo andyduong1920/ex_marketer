@@ -4,6 +4,10 @@ defmodule ExMarketerWeb.KeywordLive.IndexLive do
   alias ExMarketer.Keyword
 
   def mount(_params, %{"current_user_id" => current_user_id}, socket) do
-    {:ok, assign(socket, :keywords, Keyword.list_by_user(current_user_id))}
+    {
+      :ok,
+      assign(socket, :keywords, Keyword.list_by_user(current_user_id)),
+      temporary_assigns: [keywords: []]
+    }
   end
 end
