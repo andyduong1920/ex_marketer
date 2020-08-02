@@ -1,11 +1,5 @@
-body.auth-layout {
+.auth-layout {
   height: 100vh;
-
-  .container {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-  }
 
   .content {
     display: flex;

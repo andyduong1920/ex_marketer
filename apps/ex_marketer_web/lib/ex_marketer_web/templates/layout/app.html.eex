@@ -1,32 +1,7 @@
-<body class="app-layout <%= authentication_class(@current_user) %> <%= formatted_controller_name(@controller) %> <%= formatted_action_name(@action) %>">
-	<main role="main" class="container-fluid">
-		<%= render "_user_menu.html", assigns %>
-		<%= if get_flash(@conn, :info) do %>
-			<p class="alert alert-info my-3" role="alert"><%= get_flash(@conn, :info) %></p>
-		<% end %>
-
-		<%= if get_flash(@conn, :error) do %>
-			<p class="alert alert-danger my-3" role="alert"><%= get_flash(@conn, :error) %></p>
-		<% end %>
-
-		<div class="notification">
+<div class="app-layout">
+	<div class="content">
+		<div class="col col-12">
+			<%= @inner_content %>
 		</div>
-
-		<div class="row">
-			<div class="col col-9">
-				<%= @inner_content %>
-			</div>
-
-			<%= if @current_user do %>
-				<div class="col col-3">
-					<div class="online-user">
-						Online users
-
-						<ul>
-						</ul>
-					</div>
-				</div>
-			<% end %>
-		</div>
-	</main>
-</body>
+	</div>
+</div>

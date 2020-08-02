@@ -5,10 +5,9 @@
   <nav class="my-2 my-md-0 mr-md-3">
     <%= if @current_user do %>
       <span class="mr-2">
-        <%= @current_user.email %>
+        <%= "Welcome, #{@current_user.email}" %>
       </span>
-      <%= link "Upload Keyword", to: Routes.keyword_path(@conn, :new), class: "btn btn-outline-primary" %></li>
-      <%= link "Keywords", to: Routes.keyword_path(@conn, :index), class: "p-3 text-dark" %>
+      <%= link "Keywords", to: Routes.live_path(@conn, ExMarketerWeb.KeywordLive), class: "btn btn-outline-primary" %>
       <%= link "Logout", to: Routes.user_session_path(@conn, :delete), method: :delete, class: "p-3 text-dark" %></li>
     <% else %>
       <%= link "Login", to: Routes.user_session_path(@conn, :new), class: "p-3 text-dark" %>
