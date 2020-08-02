@@ -3,7 +3,7 @@
 <% else %>
 	<div class="list-keyword">
 		<%= for keyword <- @keywords do %>
-			<%# <%= render "_keyword.html", %{keyword: keyword} %>
+			<%= live_component @socket, ExMarketerWeb.KeywordLive.KeywordComponent, keyword: keyword, id: keyword.id %>
 		<% end %>
 	</div>
 <% end %>
