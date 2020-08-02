@@ -7,7 +7,7 @@
       <span class="mr-2">
         <%= "Welcome, #{@current_user.email}" %>
       </span>
-      <%= link "Keywords", to: Routes.live_path(@conn, ExMarketerWeb.KeywordLive), class: "btn btn-outline-primary" %>
+      <%= link "Keywords", to: Routes.live_path(@conn, ExMarketerWeb.KeywordLive.IndexLive), class: "btn btn-outline-primary" %>
       <%= link "Logout", to: Routes.user_session_path(@conn, :delete), method: :delete, class: "p-3 text-dark" %></li>
     <% else %>
       <%= link "Login", to: Routes.user_session_path(@conn, :new), class: "p-3 text-dark" %>

@@ -12,7 +12,7 @@ defmodule ExMarketerWeb.Router do
     plug(:protect_from_forgery)
     plug(:put_secure_browser_headers)
     plug(:fetch_current_user)
-    plug(:put_user_token)
+    plug(:put_user_socket_token)
   end
 
   pipeline :api do
@@ -23,7 +23,7 @@ defmodule ExMarketerWeb.Router do
     plug(:put_layout, {ExMarketerWeb.LayoutView, :auth})
   end
 
-  defp put_user_token(conn, _) do
+  defp put_user_socket_token(conn, _) do
     if current_user = conn.assigns.current_user do
       token = Phoenix.Token.sign(conn, "user socket", current_user.id)
       assign(conn, :user_socket_token, token)
@@ -79,7 +79,7 @@ defmodule ExMarketerWeb.Router do
     resources("/keywords", KeywordController, only: [:show, :new, :create])
     resources("/pages", PageController, only: [:show])
 
-    live "keywords", KeywordLive
+    live "/keywords", KeywordLive.IndexLive
   end
 
   scope "/", ExMarketerWeb do

@@ -101,7 +101,10 @@ defmodule ExMarketerWeb.Accounts.UserAuth do
   def fetch_current_user(conn, _opts) do
     {user_token, conn} = ensure_user_token(conn)
     user = user_token && Accounts.get_user_by_session_token(user_token)
-    assign(conn, :current_user, user)
+
+    conn
+    |> put_session(:current_user_id, user.id)
+    |> assign(:current_user, user)
   end
 
   defp ensure_user_token(conn) do
@@ -155,5 +158,5 @@ defmodule ExMarketerWeb.Accounts.UserAuth do
 
   defp maybe_store_return_to(conn), do: conn
 
-  defp signed_in_path(conn), do: Routes.live_path(conn, ExMarketerWeb.KeywordLive)
+  defp signed_in_path(conn), do: Routes.live_path(conn, ExMarketerWeb.KeywordLive.IndexLive)
 end
