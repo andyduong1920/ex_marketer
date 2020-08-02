@@ -1,4 +1,4 @@
-<div id="keyword-<%= @keyword.id %>" class="card card-keyword card-keyword--<%= @keyword.status %>">
+<div class="card card-keyword card-keyword--<%= @keyword.status %>">
   <div class="card-body">
     <h5 class="card-title">
       <%= @keyword.keyword %> - <%= KeywordView.localize_status(@keyword.status) %>

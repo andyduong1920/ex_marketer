@@ -1,9 +1,9 @@
 <%= if @keywords |> Enum.count === 0 do %>
 	<p><%= gettext("empty_data") %></p>
 <% else %>
-	<div class="list-keyword">
+	<div id="listKeyword" class="list-keyword" phx-update="prepend">
 		<%= for keyword <- @keywords do %>
-			<%= live_component @socket, ExMarketerWeb.KeywordLive.KeywordComponent, keyword: keyword, id: keyword.id %>
+			<%= live_component @socket, ExMarketerWeb.KeywordLive.KeywordComponent, id: keyword.id, keyword: keyword %>
 		<% end %>
 	</div>
 <% end %>

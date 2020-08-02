@@ -55,8 +55,10 @@ defmodule ExMarketer.Crawler.Worker do
   end
 
   defp broadcast_to_user(user_id, keyword_id) do
-    ExMarketerWeb.Endpoint.broadcast!("user:#{user_id}", "keyword_completed", %{
-      keyword_id: keyword_id
-    })
+    Phoenix.PubSub.broadcast!(
+      ExMarketer.PubSub,
+      "user_keyword:#{user_id}",
+      {:keyword_completed, %{keyword_id: keyword_id}}
+    )
   end
 end

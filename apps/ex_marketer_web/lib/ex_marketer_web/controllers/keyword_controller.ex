@@ -5,14 +5,6 @@ defmodule ExMarketerWeb.KeywordController do
   alias ExMarketer.CsvParser
   alias ExMarketer.Crawler.TaskSupervisor
 
-  def index(conn, _params) do
-    current_user = conn.assigns.current_user
-
-    keywords = Keyword.list_by_user(current_user.id)
-
-    render(conn, "index.html", keywords: keywords)
-  end
-
   def show(conn, %{"id" => id}) do
     keyword = Keyword.find(id)
 
@@ -40,7 +32,7 @@ defmodule ExMarketerWeb.KeywordController do
 
       conn
       |> put_flash(:info, gettext("upload_success"))
-      |> redirect(to: Routes.keyword_path(conn, :index))
+      |> redirect(to: Routes.live_path(conn, ExMarketerWeb.KeywordLive.IndexLive))
       |> halt()
     else
       render(conn, "new.html", changeset: %{changeset | action: :insert})
