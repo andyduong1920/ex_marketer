@@ -15,12 +15,6 @@ defmodule ExMarketerWeb.KeywordController do
     end
   end
 
-  def new(conn, _params) do
-    changeset = Keyword.upload_keyword_changeset()
-
-    render(conn, "new.html", changeset: changeset)
-  end
-
   def create(conn, %{"keyword" => keyword_params}) do
     changeset = Keyword.upload_keyword_changeset(keyword_params)
 

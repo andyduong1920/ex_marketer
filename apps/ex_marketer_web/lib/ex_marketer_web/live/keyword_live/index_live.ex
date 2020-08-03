@@ -10,14 +10,13 @@ defmodule ExMarketerWeb.KeywordLive.IndexLive do
       socket
       |> assign(:keywords, Keyword.list_by_user(current_user_id))
       |> assign(:changeset, Keyword.upload_keyword_changeset())
+      |> assign(:trigger_submit, false)
 
     {:ok, socket, temporary_assigns: [keywords: []]}
   end
 
-  def handle_event("save", %{"keyword" => %{"file" => file}}, socket) do
-    # Keyword.upload_keyword_changeset(file)
-
-    {:noreply, socket}
+  def handle_event("form_submit", _params, socket) do
+    {:noreply, assign(socket, trigger_submit: true)}
   end
 
   def handle_info({:keyword_completed, %{keyword_id: keyword_id}}, socket) do

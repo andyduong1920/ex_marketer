@@ -76,7 +76,7 @@ defmodule ExMarketerWeb.Router do
     put("/settings/update_email", Accounts.UserSettingsController, :update_email)
     get("/settings/confirm_email/:token", Accounts.UserSettingsController, :confirm_email)
 
-    resources("/keywords", KeywordController, only: [:show, :new, :create])
+    resources("/keywords", KeywordController, only: [:show, :create])
     resources("/pages", PageController, only: [:show])
 
     live "/keywords", KeywordLive.IndexLive
