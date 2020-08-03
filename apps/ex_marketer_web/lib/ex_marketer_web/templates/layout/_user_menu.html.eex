@@ -2,11 +2,23 @@
   <%= link to: Routes.home_path(@conn, :index) do %>
     <h5 class="my-0 mr-md-auto font-weight-normal">ExMarketer</h5>
   <% end %>
-  <nav class="my-2 my-md-0 mr-md-3">
+  <nav class="my-2 my-md-0 mr-md-3 d-flex align-items-center">
     <%= if @current_user do %>
       <span class="mr-2">
         <%= "Welcome, #{@current_user.email}" %>
       </span>
+
+      <div class="dropdown pr-3">
+        <button class="btn btn-link dropdown-toggle" type="button" id="dropdownOnlineUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Online users
+        </button>
+
+        <div class="dropdown-menu" aria-labelledby="dropdownOnlineUser">
+          <ol class="online-user">
+          </ol>
+        </div>
+      </div>
+
       <%= link "Keywords", to: Routes.live_path(@conn, ExMarketerWeb.KeywordLive.IndexLive), class: "btn btn-outline-primary" %>
       <%= link "Logout", to: Routes.user_session_path(@conn, :delete), method: :delete, class: "p-3 text-dark" %></li>
     <% else %>

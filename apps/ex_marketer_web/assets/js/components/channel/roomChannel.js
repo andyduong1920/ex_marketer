@@ -5,7 +5,7 @@ import { Alert } from "bootstrap.native/dist/bootstrap-native";
 const SELECTOR = {
   notification: ".notification",
   alert: ".alert",
-  onlineUser: ".online-user ul",
+  onlineUser: ".online-user",
 };
 
 class RoomChannel {
@@ -24,6 +24,7 @@ class RoomChannel {
     this.channel
       .join()
       .receive("ok", (resp) => {
+        console.log("aaa");
         this.channel.on("user_joined", (message) => {
           this._onUserJoined(message.email);
         });
@@ -64,7 +65,7 @@ class RoomChannel {
       const item = metas[0];
 
       listUserTemplare = listUserTemplare.concat(
-        `<li>${item.email} - ${item.last_seen_at}</li>`
+        `<li class="m-2">${item.email}</li>`
       );
     });
 
