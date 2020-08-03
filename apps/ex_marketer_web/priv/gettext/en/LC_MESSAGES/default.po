@@ -68,4 +68,4 @@ msgid "welcome"
 msgstr "An Advertising - Reports platform build on Elixir and Phoenix"
 
 msgid "download_example_csv"
-msgstr "Download Example CSV"
+msgstr "example file"

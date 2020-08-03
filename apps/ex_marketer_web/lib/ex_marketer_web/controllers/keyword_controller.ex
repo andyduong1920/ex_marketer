@@ -25,7 +25,6 @@ defmodule ExMarketerWeb.KeywordController do
       |> Enum.map(&TaskSupervisor.start_chilld(&1, current_user.id))
 
       conn
-      |> put_flash(:info, gettext("upload_success"))
       |> redirect(to: Routes.live_path(conn, ExMarketerWeb.KeywordLive.IndexLive))
       |> halt()
     else

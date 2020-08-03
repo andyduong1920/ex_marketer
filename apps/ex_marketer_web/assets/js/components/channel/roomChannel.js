@@ -6,6 +6,8 @@ const SELECTOR = {
   notification: ".notification",
   alert: ".alert",
   onlineUser: ".online-user",
+  onlineUserList: "ol",
+  onlineUserBadge: ".badge",
 };
 
 class RoomChannel {
@@ -13,6 +15,12 @@ class RoomChannel {
     this.channel = socket.channel(`room:lobby`, {});
     this.notification = document.querySelector(SELECTOR.notification);
     this.onlineUser = document.querySelector(SELECTOR.onlineUser);
+    this.onlineUserList = this.onlineUser.querySelector(
+      SELECTOR.onlineUserList
+    );
+    this.onlineUserBadge = this.onlineUser.querySelector(
+      SELECTOR.onlineUserBadge
+    );
     this.presence = new Presence(this.channel);
 
     this._setup();
@@ -24,7 +32,6 @@ class RoomChannel {
     this.channel
       .join()
       .receive("ok", (resp) => {
-        console.log("aaa");
         this.channel.on("user_joined", (message) => {
           this._onUserJoined(message.email);
         });
@@ -69,7 +76,8 @@ class RoomChannel {
       );
     });
 
-    this.onlineUser.innerHTML = listUserTemplare;
+    this.onlineUserBadge.innerHTML = Object.keys(this.presence.state).length;
+    this.onlineUserList.innerHTML = listUserTemplare;
   }
 }
 

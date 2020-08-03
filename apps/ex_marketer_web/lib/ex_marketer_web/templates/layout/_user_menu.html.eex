@@ -8,13 +8,13 @@
         <%= "Welcome, #{@current_user.email}" %>
       </span>
 
-      <div class="dropdown pr-3">
+      <div class="dropdown online-user pr-3">
         <button class="btn btn-link dropdown-toggle" type="button" id="dropdownOnlineUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Online users
+          <span class="badge badge-success"></span> online users
         </button>
 
         <div class="dropdown-menu" aria-labelledby="dropdownOnlineUser">
-          <ol class="online-user">
+          <ol>
           </ol>
         </div>
       </div>

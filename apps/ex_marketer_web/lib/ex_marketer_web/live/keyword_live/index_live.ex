@@ -11,16 +11,22 @@ defmodule ExMarketerWeb.KeywordLive.IndexLive do
       |> assign(:keywords, Keyword.list_by_user(current_user_id))
       |> assign(:changeset, Keyword.upload_keyword_changeset())
       |> assign(:trigger_submit, false)
+      |> assign(:recently_update, false)
 
     {:ok, socket, temporary_assigns: [keywords: []]}
   end
 
-  def handle_event("form_submit", _params, socket) do
+  def handle_event("form_change", _params, socket) do
     {:noreply, assign(socket, trigger_submit: true)}
   end
 
   def handle_info({:keyword_completed, %{keyword_id: keyword_id}}, socket) do
-    {:noreply, assign(socket, :keywords, [Keyword.find(keyword_id)])}
+    socket =
+      socket
+      |> assign(:recently_update, true)
+      |> assign(:keywords, [Keyword.find(keyword_id)])
+
+    {:noreply, socket}
   end
 
   defp subscribe_pubsub_channel(current_user_id) do

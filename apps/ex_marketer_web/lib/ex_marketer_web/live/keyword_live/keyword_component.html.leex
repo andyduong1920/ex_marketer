@@ -1,4 +1,4 @@
-<div class="card card-keyword card-keyword--<%= @keyword.status %>">
+<div class="card card-keyword card-keyword--<%= @keyword.status %> <%= if @recently_update, do: "card-keyword--recently-update"%>">
   <div class="card-body">
     <h5 class="card-title">
       <%= @keyword.keyword %> - <%= KeywordView.localize_status(@keyword.status) %>
