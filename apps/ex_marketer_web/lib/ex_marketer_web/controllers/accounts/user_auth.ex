@@ -102,8 +102,15 @@ defmodule ExMarketerWeb.Accounts.UserAuth do
     {user_token, conn} = ensure_user_token(conn)
     user = user_token && Accounts.get_user_by_session_token(user_token)
 
+    conn =
+      if user do
+        conn
+        |> put_session(:current_user_id, user.id)
+      else
+        conn
+      end
+
     conn
-    |> put_session(:current_user_id, user.id)
     |> assign(:current_user, user)
   end
 
