@@ -3,7 +3,6 @@ defmodule ExMarketerWeb.UserSocket do
 
   ## Channels
   channel "room:*", ExMarketerWeb.RoomChannel
-  channel "user:*", ExMarketerWeb.UserChannel
 
   @max_age 24 * 60 * 60
 
