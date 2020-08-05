@@ -25,10 +25,16 @@ defmodule ExMarketerWeb.KeywordLive.IndexLive do
     keyword = Keyword.find(keyword_id)
 
     socket =
-      socket
-      |> assign(:page_title, keyword.keyword)
-      |> assign(:keyword, keyword)
-      |> assign(:selected_keyword, keyword.id)
+      if keyword.user_id == socket.assigns.current_user_id do
+        socket
+        |> assign(:page_title, keyword.keyword)
+        |> assign(:keyword, keyword)
+        |> assign(:selected_keyword, keyword.id)
+      else
+        socket
+        |> put_flash(:error, "Not Found")
+        |> push_patch(to: Routes.keyword_index_path(socket, :index))
+      end
 
     {:noreply, socket}
   end
