@@ -7,7 +7,7 @@ defmodule ExMarketer.KeywordTest do
     assert Keyword.statues() === %{
              created: "created",
              in_progress: "in_progress",
-             successed: "successed",
+             completed: "completed",
              failed: "failed"
            }
   end
@@ -78,26 +78,26 @@ defmodule ExMarketer.KeywordTest do
 
   test "update!/2 update the record" do
     record = insert(:keyword)
-    Keyword.update!(record, %{status: "successed"})
+    Keyword.update!(record, %{status: "completed"})
 
     result = Keyword.find(record.id)
 
-    assert result.status() === "successed"
+    assert result.status() === "completed"
   end
 
-  describe "given a successed status" do
-    test "successed?/1 returns true" do
-      record = insert(:keyword, status: "successed")
+  describe "given a completed status" do
+    test "completed?/1 returns true" do
+      record = insert(:keyword, status: "completed")
 
-      assert Keyword.successed?(record) === true
+      assert Keyword.completed?(record) === true
     end
   end
 
-  describe "given a non-successed status" do
-    test "successed?/1 returns false" do
+  describe "given a non-completed status" do
+    test "completed?/1 returns false" do
       record = insert(:keyword, status: "in_progress")
 
-      assert Keyword.successed?(record) === false
+      assert Keyword.completed?(record) === false
     end
   end
 end

@@ -3,8 +3,8 @@ defmodule ExMarketerWeb.KeywordView do
 
   alias ExMarketer.Keyword
 
-  def successed?(keyword) do
-    Keyword.successed?(keyword)
+  def completed?(keyword) do
+    Keyword.completed?(keyword)
   end
 
   def display_fail_reason?(status) do
