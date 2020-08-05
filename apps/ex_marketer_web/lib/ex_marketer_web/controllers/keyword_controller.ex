@@ -1,19 +1,8 @@
 defmodule ExMarketerWeb.KeywordController do
   use ExMarketerWeb, :controller
 
-  alias ExMarketer.Keyword
-  alias ExMarketer.CsvParser
+  alias ExMarketer.{Keyword, CsvParser}
   alias ExMarketer.Crawler.TaskSupervisor
-
-  def show(conn, %{"id" => id}) do
-    keyword = Keyword.find(id)
-
-    if keyword_displayable?(conn, keyword) do
-      render(conn, "show.html", keyword: keyword)
-    else
-      render_404(conn)
-    end
-  end
 
   def create(conn, %{"keyword" => keyword_params}) do
     changeset = Keyword.upload_keyword_changeset(keyword_params)
@@ -25,7 +14,7 @@ defmodule ExMarketerWeb.KeywordController do
       |> Enum.map(&TaskSupervisor.start_chilld(&1, current_user.id))
 
       conn
-      |> redirect(to: Routes.live_path(conn, ExMarketerWeb.KeywordLive.IndexLive))
+      |> redirect(to: Routes.keyword_index_path(conn, :index))
       |> halt()
     else
       render(conn, "new.html", changeset: %{changeset | action: :insert})

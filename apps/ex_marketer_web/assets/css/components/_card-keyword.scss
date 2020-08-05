@@ -2,12 +2,8 @@
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
 
-  &--recently-update {
-    animation-name: backgroundColorUpdate;
-    animation-duration: 1.5s;
-    animation-iteration-count: 1;
-    animation-direction: alternate;
-    animation-timing-function: linear;
+  &--selected {
+    background-color: #ffd97d;
   }
 
   &--recently-search {
@@ -16,15 +12,6 @@
     animation-iteration-count: 1;
     animation-direction: alternate;
     animation-timing-function: linear;
-  }
-
-  @keyframes backgroundColorUpdate {
-    0% {
-      background: #ffd97d;
-    }
-    100% {
-      background: #fff;
-    }
   }
 
   @keyframes backgroundColorSearch {

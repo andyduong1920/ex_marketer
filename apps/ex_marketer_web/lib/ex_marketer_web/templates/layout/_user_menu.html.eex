@@ -19,7 +19,7 @@
         </div>
       </div>
 
-      <%= link "Keywords", to: Routes.live_path(@conn, ExMarketerWeb.KeywordLive.IndexLive), class: "btn btn-outline-primary" %>
+      <%= link "Keywords", to: Routes.keyword_index_path(@conn, :index), class: "btn btn-outline-primary" %>
       <%= link "Logout", to: Routes.user_session_path(@conn, :delete), method: :delete, class: "p-3 text-dark" %></li>
     <% else %>
       <%= link "Login", to: Routes.user_session_path(@conn, :new), class: "p-3 text-dark" %>
