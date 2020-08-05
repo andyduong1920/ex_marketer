@@ -5,22 +5,16 @@ import { Alert } from "bootstrap.native/dist/bootstrap-native";
 const SELECTOR = {
   notification: ".notification",
   alert: ".alert",
-  onlineUser: ".online-user",
-  onlineUserList: "ol",
-  onlineUserBadge: ".badge",
+  onlineUserList: ".online-user ol",
+  onlineUserBadge: ".online-user .badge",
 };
 
 class RoomChannel {
   constructor() {
     this.channel = socket.channel(`room:lobby`, {});
     this.notification = document.querySelector(SELECTOR.notification);
-    this.onlineUser = document.querySelector(SELECTOR.onlineUser);
-    this.onlineUserList = this.onlineUser.querySelector(
-      SELECTOR.onlineUserList
-    );
-    this.onlineUserBadge = this.onlineUser.querySelector(
-      SELECTOR.onlineUserBadge
-    );
+    this.onlineUserList = document.querySelector(SELECTOR.onlineUserList);
+    this.onlineUserBadge = document.querySelector(SELECTOR.onlineUserBadge);
     this.presence = new Presence(this.channel);
 
     this._setup();

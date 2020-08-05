@@ -16,7 +16,7 @@ defmodule ExMarketerWeb.KeywordLive.IndexLive do
     {:ok, socket, temporary_assigns: [keywords: []]}
   end
 
-  def handle_event("form_change", _params, socket) do
+  def handle_event("form_submit", _params, socket) do
     {:noreply, assign(socket, trigger_submit: true)}
   end
 
