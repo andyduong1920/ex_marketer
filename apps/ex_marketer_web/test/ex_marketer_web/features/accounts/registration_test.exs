@@ -1,5 +1,5 @@
 defmodule ExMarketerWeb.Accounts.RegistrationTest do
-  use ExMarketerWeb.FeatureCase, async: true
+  use ExMarketerWeb.FeatureCase
 
   @path Routes.user_registration_path(ExMarketerWeb.Endpoint, :new)
 

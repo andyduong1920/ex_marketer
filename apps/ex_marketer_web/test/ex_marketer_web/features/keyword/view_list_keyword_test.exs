@@ -1,5 +1,5 @@
 defmodule ExMarketerWeb.ViewListKeywordTest do
-  use ExMarketerWeb.FeatureCase, async: true
+  use ExMarketerWeb.FeatureCase
 
   @path Routes.keyword_index_path(ExMarketerWeb.Endpoint, :index)
 
@@ -36,6 +36,10 @@ defmodule ExMarketerWeb.ViewListKeywordTest do
       |> find(Query.css(@selectors.card_keyword_completed))
       |> assert_has(Query.link(@messages.view_details))
       |> assert_has(Query.link(@messages.view_page))
+
+      session
+      |> click(Query.link(@messages.view_details))
+      |> assert_has(Query.css(".keyword-details"))
     end
   end
 
