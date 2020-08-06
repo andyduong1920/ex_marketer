@@ -43,3 +43,11 @@ config :wallaby,
   chromedriver: [headless: System.get_env("CHROME_HEADLESS", "true") !== "false"],
   screenshot_dir: "tmp/wallaby_screenshots",
   screenshot_on_failure: true
+
+config :hound,
+  driver: "chrome_driver",
+  browser:
+    if(System.get_env("CHROME_HEADLESS", "true") !== "false",
+      do: "chrome_headless",
+      else: "chrome"
+    )

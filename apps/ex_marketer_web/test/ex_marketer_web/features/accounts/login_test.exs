@@ -5,11 +5,14 @@ defmodule ExMarketerWeb.Accounts.LoginTest do
     user = insert(:user)
 
     session
-    |> login(user.email, valid_user_password())
+    |> visit(Routes.user_session_path(ExMarketerWeb.Endpoint, :new))
+    |> fill_in(Wallaby.Query.text_field("user_email"), with: user.email)
+    |> fill_in(Wallaby.Query.text_field("user_password"), with: valid_user_password())
+    |> click(Wallaby.Query.button("Login"))
 
     session
     |> assert_has(Query.css(".app-layout"))
-    |> assert_has(Query.text(user.email))
+    |> assert_has(Query.text("Welcome, " <> user.email))
   end
 
   @sessions 3
