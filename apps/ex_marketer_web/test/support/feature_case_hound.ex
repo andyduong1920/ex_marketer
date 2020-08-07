@@ -12,7 +12,7 @@ defmodule ExMarketerWeb.FeatureCaseHound do
     end
   end
 
-  setup do
+  setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(ExMarketer.Repo)
 
     unless tags[:async] do
