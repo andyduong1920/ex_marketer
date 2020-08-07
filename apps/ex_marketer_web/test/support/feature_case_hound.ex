@@ -14,7 +14,10 @@ defmodule ExMarketerWeb.FeatureCaseHound do
 
   setup do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(ExMarketer.Repo)
-    Ecto.Adapters.SQL.Sandbox.mode(ExMarketer.Repo, {:shared, self()})
+
+    unless tags[:async] do
+      Ecto.Adapters.SQL.Sandbox.mode(ExMarketer.Repo, {:shared, self()})
+    end
 
     metadata = Phoenix.Ecto.SQL.Sandbox.metadata_for(ExMarketer.Repo, self())
     Hound.start_session(metadata: metadata)

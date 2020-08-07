@@ -28,14 +28,14 @@ defmodule ExMarketerWeb.Hound.LoginTest do
     assert find_element(:css, ".notification .alert") |> visible_text =~
              "#{user_3.email} just login"
 
-    change_session_to(:user_2_session)
+    in_browser_session(:user_2_session, fn ->
+      assert find_element(:css, ".notification .alert") |> visible_text =~
+               "#{user_3.email} just login"
+    end)
 
-    assert find_element(:css, ".notification .alert") |> visible_text =~
-             "#{user_3.email} just login"
-
-    change_session_to(:user_3_session)
-
-    assert {:error, _} = search_element(:css, ".notification .alert")
+    in_browser_session(:user_3_session, fn ->
+      assert {:error, _} = search_element(:css, ".notification .alert")
+    end)
   end
 
   defp login(email) do
