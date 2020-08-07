@@ -1,5 +1,5 @@
 defmodule ExMarketerWeb.UserSocketTest do
-  use ExMarketerWeb.ChannelCase
+  use ExMarketerWeb.ChannelCase, async: true
 
   alias ExMarketerWeb.UserSocket
 
