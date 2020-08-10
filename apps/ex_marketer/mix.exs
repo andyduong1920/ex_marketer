@@ -13,13 +13,7 @@ defmodule ExMarketer.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps(),
-      preferred_cli_env: [
-        vcr: :test,
-        "vcr.delete": :test,
-        "vcr.check": :test,
-        "vcr.show": :test
-      ]
+      deps: deps()
     ]
   end
 
@@ -49,7 +43,6 @@ defmodule ExMarketer.MixProject do
       {:jason, "~> 1.0"},
       {:httpoison, "~> 1.7"},
       {:floki, "~> 0.27.0"},
-      {:exvcr, "~> 0.11.1", only: :test},
       {:csv, "~> 2.3"},
       {:ex_machina, "~> 2.4", only: :test}
     ]

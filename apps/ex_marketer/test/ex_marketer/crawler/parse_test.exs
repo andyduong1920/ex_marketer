@@ -1,17 +1,14 @@
 defmodule ExMarketer.Crawler.ParseTest do
   use ExUnit.Case, async: true
-  use ExVCR.Mock, adapter: ExVCR.Adapter.Hackney
 
   alias ExMarketer.Crawler.Request
   alias ExMarketer.Crawler.Parse
   alias ExMarketer.Crawler.Result
 
   test "perform/1 returns the ExMarketer.Crawler.Result" do
-    use_cassette "google/valid" do
-      {:ok, response_body} = Request.get("grammarly")
+    {:ok, response_body} = Request.get("grammarly")
 
-      assert Parse.perform(response_body) === expecting_result()
-    end
+    assert Parse.perform(response_body) === expecting_result()
   end
 
   defp expecting_result do
