@@ -51,8 +51,7 @@ defmodule ExMarketerWeb.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:sobelow, "~> 0.8", only: [:dev, :test], runtime: false},
       {:wallaby, "~> 0.26.2", only: :test, runtime: false},
-      {:ex_machina, "~> 2.4", only: :test},
-      {:mox, "~> 0.5.2", only: :test}
+      {:ex_machina, "~> 2.4", only: :test}
     ]
   end
 
