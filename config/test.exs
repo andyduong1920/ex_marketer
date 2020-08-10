@@ -32,3 +32,7 @@ config :wallaby,
   chromedriver: [headless: System.get_env("CHROME_HEADLESS", "true") !== "false"],
   screenshot_dir: "tmp/wallaby_screenshots",
   screenshot_on_failure: true
+
+config :ex_marketer,
+  google_client: ExMarketer.Crawler.GoogleClientMock,
+  http_adapter: ExMarketer.Crawler.HttpAdapterMock

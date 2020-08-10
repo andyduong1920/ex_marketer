@@ -1,17 +1,26 @@
 defmodule ExMarketer.Crawler.WorkerTest do
   use ExMarketer.DataCase, async: true
 
+  import Mox
+
   alias ExMarketer.Crawler.Worker
   alias ExMarketer.Keyword
+  alias ExMarketer.Crawler.GoogleClientMock
+
+  setup :verify_on_exit!
 
   describe "given a successful response" do
     test 'perform/2 returns :ok' do
+      GoogleClientMock |> expect(:get, fn _keyword -> {:ok, "body"} end)
+
       record = insert(:keyword)
 
       assert Worker.perform(record.id, "grammarly") === :ok
     end
 
     test 'perform/2 updates the Keyword to success' do
+      GoogleClientMock |> expect(:get, fn _keyword -> {:ok, "body"} end)
+
       record = insert(:keyword)
 
       assert record.status === Keyword.statues().created
@@ -26,6 +35,9 @@ defmodule ExMarketer.Crawler.WorkerTest do
 
   describe "given an unsuccesful response" do
     test 'perform/2 raises an error' do
+      ExMarketer.Crawler.GoogleClientMock
+      |> expect(:get, fn _keyword -> {:error, "Response code: 401"} end)
+
       record = insert(:keyword, %{keyword: "invalid"})
 
       assert_raise MatchError,
@@ -36,6 +48,9 @@ defmodule ExMarketer.Crawler.WorkerTest do
     end
 
     test 'perform/2 updates the Keyword to failed' do
+      ExMarketer.Crawler.GoogleClientMock
+      |> expect(:get, fn _keyword -> {:error, "Response code: 401"} end)
+
       record = insert(:keyword, %{keyword: "invalid"})
 
       assert record.status === Keyword.statues().created

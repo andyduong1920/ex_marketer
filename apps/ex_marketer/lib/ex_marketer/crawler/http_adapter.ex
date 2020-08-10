@@ -1,5 +1,5 @@
-defmodule ExMarketer.Crawler.Request do
-  @base_url "https://www.google.com/search?q="
+defmodule ExMarketer.Crawler.HttpAdapter do
+  use HTTPoison.Base
 
   @browser_user_agent [
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36",
@@ -10,19 +10,8 @@ defmodule ExMarketer.Crawler.Request do
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36 Edg/80.0.361.62"
   ]
 
-  def get(keyword) do
-    url = @base_url <> URI.encode(keyword)
-
-    case HTTPoison.get(url, headers()) do
-      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-        {:ok, body}
-
-      {:ok, %HTTPoison.Response{status_code: status_code}} ->
-        {:error, "Response code: #{status_code}"}
-
-      {:error, %HTTPoison.Error{reason: reason}} ->
-        {:error, reason}
-    end
+  def get(url) do
+    get(url, headers())
   end
 
   defp headers do
