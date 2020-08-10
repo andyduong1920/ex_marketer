@@ -17,7 +17,10 @@ defmodule ExMarketerWeb.KeywordController do
       |> redirect(to: Routes.keyword_index_path(conn, :index))
       |> halt()
     else
-      render(conn, "new.html", changeset: %{changeset | action: :insert})
+      conn
+      |> redirect(to: Routes.keyword_index_path(conn, :index))
+      |> put_flash(:error, inspect(changeset.errors))
+      |> halt()
     end
   end
 end
