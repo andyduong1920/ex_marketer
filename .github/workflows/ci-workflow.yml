@@ -28,7 +28,7 @@ jobs:
           otp-version: "23.0.2"
           elixir-version: "1.10.4"
 
-      - name: Cache build
+      - name: Cache Elixir build
         uses: actions/cache@v2
         with:
           path: |
