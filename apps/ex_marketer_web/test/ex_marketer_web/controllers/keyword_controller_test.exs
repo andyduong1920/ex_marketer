@@ -25,6 +25,7 @@ defmodule ExMarketerWeb.KeywordControllerTest do
 
       conn = post(conn, Routes.keyword_path(conn, :create), %{keyword: %{file: upload}})
 
+      # Making sure the GoogleClientMock is called
       assert_receive {^ref, "process_elixir"}
       assert_receive {^ref, "process_developer"}
 
