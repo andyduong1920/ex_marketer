@@ -21,3 +21,6 @@ erl_crash.dump
 
 # Elixir LS
 **/.elixir_ls
+
+# tmp
+**/tmp/
