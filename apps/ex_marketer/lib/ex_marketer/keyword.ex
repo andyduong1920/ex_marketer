@@ -10,7 +10,7 @@ defmodule ExMarketer.Keyword do
   @statues %{
     created: "created",
     in_progress: "in_progress",
-    successed: "successed",
+    completed: "completed",
     failed: "failed"
   }
 
@@ -31,9 +31,13 @@ defmodule ExMarketer.Keyword do
   end
 
   def all() do
+    Repo.all(all_query())
+  end
+
+  def list_by_user(user_id) do
     # TODO: Pagination
     query =
-      from(Keyword,
+      from(k in all_by_user_query(user_id),
         order_by: [desc: :inserted_at],
         limit: 20
       )
@@ -41,16 +45,29 @@ defmodule ExMarketer.Keyword do
     Repo.all(query)
   end
 
-  def list_by_user(user_id) do
-    # TODO: Pagination
+  def search_by_keyword_name(keyword_name, user_id) do
     query =
-      from(k in Keyword,
-        where: k.user_id == ^user_id,
+      from(k in all_by_user_query(user_id),
+        where: ilike(k.keyword, ^"#{keyword_name}%"),
         order_by: [desc: :inserted_at],
-        limit: 20
+        limit: 10
       )
 
     Repo.all(query)
+  end
+
+  def in_progress_keyword_stats(user_id) do
+    query =
+      from(k in all_by_user_query(user_id),
+        select: %{
+          record_count: count(k.id)
+        },
+        where: k.status == ^"in_progress"
+      )
+
+    [%{record_count: record_count}] = Repo.all(query)
+
+    record_count
   end
 
   def find(id) do
@@ -69,8 +86,8 @@ defmodule ExMarketer.Keyword do
     |> Repo.update!()
   end
 
-  def successed?(keyword) do
-    keyword.status === "successed"
+  def completed?(keyword) do
+    keyword.status === "completed"
   end
 
   def changeset(%Keyword{} = keyword, attrs) do
@@ -91,5 +108,13 @@ defmodule ExMarketer.Keyword do
     %Keyword{}
     |> cast(attrs, [:file])
     |> validate_required(:file)
+  end
+
+  defp all_query() do
+    from(Keyword, order_by: [desc: :inserted_at])
+  end
+
+  defp all_by_user_query(user_id) do
+    from(k in Keyword, where: k.user_id == ^user_id)
   end
 end

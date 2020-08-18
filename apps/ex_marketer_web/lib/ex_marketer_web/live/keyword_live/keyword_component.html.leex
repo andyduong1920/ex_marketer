@@ -1,4 +1,4 @@
-<div class="card card-keyword card-keyword--<%= @keyword.status %> <%= if @recently_update, do: "card-keyword--recently-update"%>">
+<div class="card card-keyword card-keyword--<%= @keyword.status %> <%= if @recently_search, do: "card-keyword--recently-search" %> <%= if @recently_update, do: "card-keyword--recently-update" %>">
   <div class="card-body">
     <h5 class="card-title">
       <%= @keyword.keyword %> - <%= KeywordView.localize_status(@keyword.status) %>
@@ -12,7 +12,7 @@
       </div>
     <% end %>
 
-    <%= if KeywordView.successed?(@keyword) do %>
+    <%= if KeywordView.completed?(@keyword) do %>
       <div class="row">
         <div class="col-auto">
           <%= link gettext("view_details"), to: Routes.keyword_path(ExMarketerWeb.Endpoint, :show, @keyword.id), class: "btn btn-sm btn-primary" %>

@@ -46,7 +46,7 @@ defmodule ExMarketerWeb do
         current_user = conn.assigns.current_user
 
         !is_nil(keyword) &&
-          ExMarketer.Keyword.successed?(keyword) &&
+          ExMarketer.Keyword.completed?(keyword) &&
           keyword.user_id === current_user.id
       end
     end

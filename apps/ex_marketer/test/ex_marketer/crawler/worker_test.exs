@@ -23,7 +23,7 @@ defmodule ExMarketer.Crawler.WorkerTest do
         Worker.perform(record.id, "grammarly")
         record = Keyword.find(record.id)
 
-        assert record.status === Keyword.statues().successed
+        assert record.status === Keyword.statues().completed
         assert record.result !== nil
       end
     end

@@ -3,16 +3,33 @@
   margin-bottom: 0.5rem;
 
   &--recently-update {
-    animation-name: backgroundColorPalette;
+    animation-name: backgroundColorUpdate;
     animation-duration: 1.5s;
     animation-iteration-count: 1;
     animation-direction: alternate;
     animation-timing-function: linear;
   }
 
-  @keyframes backgroundColorPalette {
+  &--recently-search {
+    animation-name: backgroundColorSearch;
+    animation-duration: 1.5s;
+    animation-iteration-count: 1;
+    animation-direction: alternate;
+    animation-timing-function: linear;
+  }
+
+  @keyframes backgroundColorUpdate {
     0% {
       background: #ffd97d;
+    }
+    100% {
+      background: #fff;
+    }
+  }
+
+  @keyframes backgroundColorSearch {
+    50% {
+      background: #dac9ff;
     }
     100% {
       background: #fff;
@@ -27,7 +44,7 @@
     color: $cyan;
   }
 
-  &--successed .card-title {
+  &--completed .card-title {
     color: $green;
   }
 

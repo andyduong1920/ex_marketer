@@ -30,7 +30,7 @@ defmodule ExMarketer.Crawler.Worker do
     keyword = find_keyword(keyword_id)
 
     keyword
-    |> Keyword.update!(%{status: Keyword.statues().successed, result: Map.from_struct(result)})
+    |> Keyword.update!(%{status: Keyword.statues().completed, result: Map.from_struct(result)})
 
     broadcast_to_user(keyword.user_id, keyword_id)
 

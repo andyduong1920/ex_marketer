@@ -11,7 +11,7 @@ defmodule ExMarketerWeb.ViewListKeywordTest do
 
   @selectors %{
     card_keyword: ".card-keyword",
-    card_keyword_successed: ".card-keyword--successed"
+    card_keyword_completed: ".card-keyword--completed"
   }
 
   describe "given the keyword in the database" do
@@ -20,7 +20,7 @@ defmodule ExMarketerWeb.ViewListKeywordTest do
       insert(:keyword, user: user, status: "created")
       insert(:keyword, user: user, status: "in_progress")
       insert(:keyword, user: user, status: "failed")
-      insert(:keyword, user: user, status: "successed")
+      insert(:keyword, user: user, status: "completed")
       insert(:keyword, user: insert(:user), keyword: "Another user keyword")
 
       session
@@ -33,7 +33,7 @@ defmodule ExMarketerWeb.ViewListKeywordTest do
       |> refute_has(Query.text("Another user keyword"))
 
       session
-      |> find(Query.css(@selectors.card_keyword_successed))
+      |> find(Query.css(@selectors.card_keyword_completed))
       |> assert_has(Query.link(@messages.view_details))
       |> assert_has(Query.link(@messages.view_page))
     end
