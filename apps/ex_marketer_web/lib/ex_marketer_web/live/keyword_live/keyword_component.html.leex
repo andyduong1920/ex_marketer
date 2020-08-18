@@ -1,18 +1,18 @@
-<div id="keyword-<%= @keyword.id %>" class="card card-keyword card-keyword--<%= @keyword.status %> <%= recently_update_class(assigns[:recently_update]) %>">
+<div class="card card-keyword card-keyword--<%= @keyword.status %> <%= if @recently_update, do: "card-keyword--recently-update"%>">
   <div class="card-body">
     <h5 class="card-title">
-      <%= @keyword.keyword %> - <%= localize_status(@keyword.status) %>
+      <%= @keyword.keyword %> - <%= KeywordView.localize_status(@keyword.status) %>
     </h5>
 
     <p><%= gettext("created_at %{created_at}", created_at: @keyword.inserted_at) %></p>
 
-    <%= if display_fail_reason?(@keyword.status) do %>
+    <%= if KeywordView.display_fail_reason?(@keyword.status) do %>
       <div class="alert alert-danger" role="alert">
         <%= @keyword.failure_reason %>
       </div>
     <% end %>
 
-    <%= if successed?(@keyword) do %>
+    <%= if KeywordView.successed?(@keyword) do %>
       <div class="row">
         <div class="col-auto">
           <%= link gettext("view_details"), to: Routes.keyword_path(ExMarketerWeb.Endpoint, :show, @keyword.id), class: "btn btn-sm btn-primary" %>

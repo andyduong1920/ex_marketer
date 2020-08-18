@@ -7,10 +7,12 @@ defmodule ExMarketerWeb.Router do
     plug(:accepts, ["html"])
     plug(:fetch_session)
     plug(:fetch_flash)
+    plug(:fetch_live_flash)
+    plug :put_root_layout, {ExMarketerWeb.LayoutView, :root}
     plug(:protect_from_forgery)
     plug(:put_secure_browser_headers)
     plug(:fetch_current_user)
-    plug(:put_user_token)
+    plug(:put_user_socket_token)
   end
 
   pipeline :api do
@@ -21,7 +23,7 @@ defmodule ExMarketerWeb.Router do
     plug(:put_layout, {ExMarketerWeb.LayoutView, :auth})
   end
 
-  defp put_user_token(conn, _) do
+  defp put_user_socket_token(conn, _) do
     if current_user = conn.assigns.current_user do
       token = Phoenix.Token.sign(conn, "user socket", current_user.id)
       assign(conn, :user_socket_token, token)
@@ -42,13 +44,12 @@ defmodule ExMarketerWeb.Router do
   # If your application does not have an admins-only section yet,
   # you can use Plug.BasicAuth to set up some basic authentication
   # as long as you are also using SSL (which you should anyway).
-  if Mix.env() in [:dev, :test] do
-    import Phoenix.LiveDashboard.Router
 
-    scope "/" do
-      pipe_through(:browser)
-      live_dashboard("/dashboard", metrics: ExMarketerWeb.Telemetry)
-    end
+  import Phoenix.LiveDashboard.Router
+
+  scope "/" do
+    pipe_through(:browser)
+    live_dashboard("/dashboard", metrics: ExMarketerWeb.Telemetry)
   end
 
   ## Authentication routes
@@ -74,8 +75,10 @@ defmodule ExMarketerWeb.Router do
     put("/settings/update_email", Accounts.UserSettingsController, :update_email)
     get("/settings/confirm_email/:token", Accounts.UserSettingsController, :confirm_email)
 
-    resources("/keywords", KeywordController, only: [:show, :index, :new, :create])
+    resources("/keywords", KeywordController, only: [:show, :create])
     resources("/pages", PageController, only: [:show])
+
+    live "/keywords", KeywordLive.IndexLive
   end
 
   scope "/", ExMarketerWeb do

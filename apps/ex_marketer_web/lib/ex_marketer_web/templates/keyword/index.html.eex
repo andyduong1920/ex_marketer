@@ -1,9 +1,0 @@
-<%= if @keywords |> Enum.count === 0 do %>
-	<p><%= gettext("empty_data") %></p>
-<% else %>
-	<div class="list-keyword">
-		<%= for keyword <- @keywords do %>
-			<%= render "_keyword.html", %{keyword: keyword} %>
-		<% end %>
-	</div>
-<% end %>

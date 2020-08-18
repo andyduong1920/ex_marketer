@@ -5,14 +5,16 @@ import { Alert } from "bootstrap.native/dist/bootstrap-native";
 const SELECTOR = {
   notification: ".notification",
   alert: ".alert",
-  onlineUser: ".online-user ul",
+  onlineUserList: ".online-user ol",
+  onlineUserBadge: ".online-user .badge",
 };
 
 class RoomChannel {
   constructor() {
     this.channel = socket.channel(`room:lobby`, {});
     this.notification = document.querySelector(SELECTOR.notification);
-    this.onlineUser = document.querySelector(SELECTOR.onlineUser);
+    this.onlineUserList = document.querySelector(SELECTOR.onlineUserList);
+    this.onlineUserBadge = document.querySelector(SELECTOR.onlineUserBadge);
     this.presence = new Presence(this.channel);
 
     this._setup();
@@ -64,11 +66,12 @@ class RoomChannel {
       const item = metas[0];
 
       listUserTemplare = listUserTemplare.concat(
-        `<li>${item.email} - ${item.last_seen_at}</li>`
+        `<li class="m-2">${item.email}</li>`
       );
     });
 
-    this.onlineUser.innerHTML = listUserTemplare;
+    this.onlineUserBadge.innerHTML = Object.keys(this.presence.state).length;
+    this.onlineUserList.innerHTML = listUserTemplare;
   }
 }
 
