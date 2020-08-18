@@ -2,6 +2,23 @@
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
 
+  &--recently-update {
+    animation-name: backgroundColorPalette;
+    animation-duration: 1.5s;
+    animation-iteration-count: 1;
+    animation-direction: alternate;
+    animation-timing-function: linear;
+  }
+
+  @keyframes backgroundColorPalette {
+    0% {
+      background: #ffd97d;
+    }
+    100% {
+      background: #fff;
+    }
+  }
+
   &--failed .card-title {
     color: $red;
   }

@@ -10,7 +10,7 @@ defmodule ExMarketer.Crawler.Worker do
       {:ok, response_body} = Request.get(keyword)
       result = Parse.perform(response_body)
 
-      on_complete(keyword_id, result)
+      on_success(keyword_id, result)
     rescue
       ex ->
         on_fail(keyword_id, ex)
@@ -26,26 +26,37 @@ defmodule ExMarketer.Crawler.Worker do
     |> Keyword.update!(%{status: Keyword.statues().in_progress})
   end
 
-  defp on_complete(keyword_id, result) do
-    keyword_id
-    |> find_keyword
+  defp on_success(keyword_id, result) do
+    keyword = find_keyword(keyword_id)
+
+    keyword
     |> Keyword.update!(%{status: Keyword.statues().successed, result: Map.from_struct(result)})
 
-    # TODO: Broadcast to Phoenix Channel
+    broadcast_to_user(keyword.user_id, keyword_id)
+
     :ok
   end
 
   defp on_fail(keyword_id, ex) do
     %MatchError{term: {:error, error_message}} = ex
 
-    keyword_id
-    |> find_keyword
+    keyword = find_keyword(keyword_id)
+
+    keyword
     |> Keyword.update!(%{status: Keyword.statues().failed, failure_reason: error_message})
+
+    broadcast_to_user(keyword.user_id, keyword_id)
 
     :error
   end
 
   defp find_keyword(keyword_id) do
     Keyword.find(keyword_id)
+  end
+
+  defp broadcast_to_user(user_id, keyword_id) do
+    ExMarketerWeb.Endpoint.broadcast!("user:#{user_id}", "keyword_completed", %{
+      keyword_id: keyword_id
+    })
   end
 end

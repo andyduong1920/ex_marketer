@@ -18,4 +18,12 @@ defmodule ExMarketerWeb.KeywordView do
   def localize_result(key) do
     Gettext.gettext(ExMarketerWeb.Gettext, key)
   end
+
+  def recently_update_class(recently_updated) do
+    if recently_updated do
+      "card-keyword--recently-update"
+    else
+      ""
+    end
+  end
 end
