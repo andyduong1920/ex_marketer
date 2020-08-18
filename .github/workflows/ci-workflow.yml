@@ -1,8 +1,6 @@
-name: "CI Tests"
+name: CI
 
-on:
-  pull_request:
-    types: [assigned, opened, synchronize, reopened]
+on: push
 
 jobs:
   test:
@@ -30,8 +28,26 @@ jobs:
           otp-version: "23.0.2"
           elixir-version: "1.10.4"
 
+      - name: Cache Elixir modules
+        uses: actions/cache@v2
+        with:
+          path: deps
+          key: ${{ runner.os }}-mix-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
+          restore-keys: |
+            ${{ runner.os }}-mix-
+
+      - name: Cache Node npm
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: Install Dependencies
-        run: mix deps.get
+        run: |
+          mix deps.get
+          mix deps.compile
 
       - name: Install node module
         run: cd apps/ex_marketer_web/assets && npm install
@@ -68,3 +84,17 @@ jobs:
         with:
           name: wallaby_screenshots
           path: apps/ex_marketer_web/tmp/wallaby_screenshots/
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    if: ${{ github.ref == 'refs/heads/development' }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: akhileshns/heroku-deploy@v3.2.6
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "ex-marketer"
+          heroku_email: "duonghienan.dha@gmail.com"

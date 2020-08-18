@@ -1,11 +1,3 @@
-<div class="row my-3">
-	<div class="col col-12">
-		<%= link gettext("upload_csv"), to: Routes.keyword_path(@conn, :new), class: "btn btn btn-primary" %>
-	</div>
-</div>
-
-<hr/>
-
 <%= if @keywords |> Enum.count === 0 do %>
 	<p><%= gettext("empty_data") %></p>
 <% else %>

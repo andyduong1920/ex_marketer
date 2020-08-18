@@ -9,7 +9,10 @@ defmodule ExMarketerWeb.UploadKeywordTest do
   }
 
   feature "upload keyword", %{session: session} do
+    user = insert(:user)
+
     session
+    |> login(user.email, valid_user_password())
     |> visit(@path)
     |> attach_file(Query.file_field(@selectors.keyword_file_field),
       path: "test/fixture/template.csv"

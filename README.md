@@ -1,3 +1,5 @@
+![CI](https://github.com/anduonghien/ex_marketer/workflows/CI/badge.svg?branch=development)
+
 ## Setup
 
 1/ Install Docker
