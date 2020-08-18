@@ -12,7 +12,7 @@ defmodule ExMarketerWeb.Accounts.UserRegistrationControllerTest do
 
     test "redirects if already logged in", %{conn: conn} do
       conn = conn |> log_in_user(insert(:user)) |> get(Routes.user_registration_path(conn, :new))
-      assert redirected_to(conn) == Routes.live_path(conn, ExMarketerWeb.KeywordLive.IndexLive)
+      assert redirected_to(conn) == Routes.keyword_index_path(conn, :index)
     end
   end
 

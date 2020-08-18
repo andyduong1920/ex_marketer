@@ -1,72 +1,72 @@
-<div>
-	<div class="row">
-		<div class="col col-auto">
-			<%= f = form_for @changeset, Routes.keyword_path(@socket, :create), multipart: true, phx_submit: :form_upload_submit, phx_trigger_action: @trigger_submit %>
-				<div class="row">
-					<div class="col col-auto">
-						<span>Upload file</span>
-						(<%= link gettext("download_example_csv"), to: "/template.csv", class: "btn-link" %>)
-					</div>
+<div class="main-actionable">
+	<div>
+		<div class="row">
+			<div class="col col-auto">
+				<%= f = form_for @changeset, Routes.keyword_path(@socket, :create), multipart: true, phx_submit: :form_upload_submit, phx_trigger_action: @trigger_submit %>
+					<div class="row">
+						<div class="col col-auto">
+							<span>Upload file</span>
+							(<%= link gettext("download_example_csv"), to: "/template.csv", class: "btn-link" %>)
+						</div>
 
-					<div class="col col-auto">
-						<div class="form-group mb-0">
-							<%= file_input f, :file, class: "form-control-file", accept: ".csv", required: true %>
-							<%= error_tag f, :file %>
+						<div class="col col-auto">
+							<div class="form-group mb-0">
+								<%= file_input f, :file, class: "form-control-file", accept: ".csv", required: true %>
+								<%= error_tag f, :file %>
+							</div>
+						</div>
+
+						<div class="col col-auto">
+							<div class="form-group">
+								<%= submit gettext("upload"), class: "btn btn-sm btn-primary" %>
+							</div>
 						</div>
 					</div>
+				</form>
+			</div>
 
-					<div class="col col-auto">
-						<div class="form-group">
-							<%= submit gettext("upload"), class: "btn btn-sm btn-primary" %>
-						</div>
+			<div class="col col-12 col-md-3">
+				<%= f = form_for :search, "#", phx_change: :form_search, phx_submit: :form_search %>
+					<div class="form-group">
+						<%= text_input f, :keyword_name, class: "form-control", placeholder: "Search keyword...", phx_debounce: "500" %>
 					</div>
-				</div>
-			</form>
+				</form>
+			</div>
 		</div>
 
-		<div class="col col-12 col-md-3">
-			<%= f = form_for :search, "#", phx_change: :form_search, phx_submit: :form_search %>
-				<div class="form-group">
-					<%= text_input f, :keyword_name, class: "form-control", placeholder: "Search keyword...", phx_debounce: "500" %>
-				</div>
-			</form>
-		</div>
-	</div>
-
-	<div class="row no-gutters">
-		<div class="col col-auto">
-			<h4 class="mr-2">
-				<span class="badge badge--in_progress">
-					<%= KeywordView.localize_status("in_progress") %>: <%= @in_progress_keyword_stats %>
-				</span>
-			</h4>
+		<div class="row no-gutters">
+			<div class="col col-auto">
+				<h4 class="mr-2">
+					<span class="badge badge--in_progress">
+						<%= KeywordView.localize_status("in_progress") %>: <%= @in_progress_keyword_stats %>
+					</span>
+				</h4>
+			</div>
 		</div>
 	</div>
 </div>
 
-<hr>
-
 <div class="row">
-	<div class="col col-8">
+	<div class="col col-6">
 		<%= if @keywords |> Enum.count === 0 do %>
 			<p><%= gettext("empty_data") %></p>
 		<% else %>
 			<div id="listKeyword" class="list-keyword">
 				<%= for keyword <- @keywords do %>
-					<%= live_component @socket, ExMarketerWeb.KeywordLive.KeywordComponent, id: "keyword-#{keyword.id}", keyword: keyword, recently_search: @recently_search, recently_update: false %>
+					<%= live_component @socket,
+						ExMarketerWeb.KeywordLive.KeywordComponent,
+						id: "keyword-#{keyword.id}",
+						keyword: keyword,
+						recently_search: @recently_search,
+						selected_keyword: @selected_keyword %>
 				<% end %>
 			</div>
 		<% end %>
 	</div>
 
-	<div class="col col-4">
-		<%= if @recently_result |> Enum.count > 0 do %>
-			<h4>Recently result</h4>
-			<div id="listRecentlyResult" class="list-keyword" phx-update="append">
-				<%= for keyword <- @recently_result do %>
-					<%= live_component @socket, ExMarketerWeb.KeywordLive.KeywordComponent, id: "recently-result-#{keyword.id}", keyword: keyword, recently_search: false, recently_update: true %>
-				<% end %>
-			</div>
+	<div class="col col-6">
+		<%= if @live_action in [:show] do %>
+			<%= live_component @socket, ExMarketerWeb.KeywordLive.DetailComponent, keyword: @keyword %>
 		<% end %>
 	</div>
 </div>

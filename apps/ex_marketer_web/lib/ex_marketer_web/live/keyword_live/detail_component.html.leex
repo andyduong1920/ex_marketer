@@ -1,0 +1,53 @@
+<div class="keyword-details">
+	<div class="row">
+    <div class="col col-12">
+      <h3><%= @keyword.keyword %></h3>
+    </div>
+
+		<%= for key <- Map.keys(@keyword.result) do %>
+			<%= unless key === "raw_html" do %>
+				<div class="col col-auto mt-3">
+					<div>
+						<strong><%= localize_result(key) %></strong>
+					</div>
+
+					<% value = @keyword.result[key] %>
+
+					<%= if is_list(value) do %>
+						<ul>
+							<%= for item <- value do %>
+								<li>
+									<%= link item, to: item, target: "_blank" %>
+								</li>
+							<% end %>
+						</ul>
+					<% else %>
+						<div>
+							<%= @keyword.result[key] %>
+						</div>
+					<% end %>
+				</div>
+			<% end %>
+		<% end %>
+
+     <div class="col col-6 mt-3">
+			<div>
+				<strong><%= gettext("created_at") %></strong>
+			</div>
+
+			<div>
+				<%= @keyword.inserted_at %>
+			</div>
+		</div>
+
+		<div class="col col-6 mt-3">
+			<div>
+				<strong><%= gettext("updated_at") %></strong>
+			</div>
+
+			<div>
+				<%= @keyword.updated_at %>
+			</div>
+		</div>
+	</div>
+</div>

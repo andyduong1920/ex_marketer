@@ -14,16 +14,38 @@ defmodule ExMarketerWeb.KeywordLive.IndexLive do
       |> assign(:in_progress_keyword_stats, Keyword.in_progress_keyword_stats(current_user_id))
       |> assign(:changeset, Keyword.upload_keyword_changeset())
       |> assign(:trigger_submit, false)
-      |> assign(:recently_result, [])
       |> assign(:recently_search, false)
+      |> assign(:keyword, nil)
+      |> assign(:selected_keyword, nil)
 
     {:ok, socket}
+  end
+
+  def handle_params(%{"id" => keyword_id}, _, socket) do
+    keyword = Keyword.find(keyword_id)
+
+    socket =
+      if keyword.user_id == socket.assigns.current_user_id do
+        socket
+        |> assign(:page_title, keyword.keyword)
+        |> assign(:keyword, keyword)
+        |> assign(:selected_keyword, keyword.id)
+      else
+        socket
+        |> put_flash(:error, "Not Found")
+        |> push_patch(to: Routes.keyword_index_path(socket, :index))
+      end
+
+    {:noreply, socket}
+  end
+
+  def handle_params(_, _, socket) do
+    {:noreply, socket}
   end
 
   def handle_event("form_upload_submit", _params, socket) do
     socket =
       socket
-      |> assign(:recently_result, [])
       |> assign(:trigger_submit, true)
 
     {:noreply, socket}
@@ -50,7 +72,6 @@ defmodule ExMarketerWeb.KeywordLive.IndexLive do
         :in_progress_keyword_stats,
         Keyword.in_progress_keyword_stats(socket.assigns.current_user_id)
       )
-      |> update(:recently_result, &(&1 ++ [keyword]))
       |> update(:keywords, &update_keywords(&1, keyword))
 
     {:noreply, socket}

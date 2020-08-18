@@ -1,7 +1,7 @@
 defmodule ExMarketerWeb.ViewListKeywordTest do
   use ExMarketerWeb.FeatureCase, async: true
 
-  @path Routes.live_path(ExMarketerWeb.Endpoint, ExMarketerWeb.KeywordLive.IndexLive)
+  @path Routes.keyword_index_path(ExMarketerWeb.Endpoint, :index)
 
   @messages %{
     empty_data: gettext("empty_data"),

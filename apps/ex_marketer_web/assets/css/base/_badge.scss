@@ -2,16 +2,4 @@
   &--in_progress {
     @extend .badge-primary;
   }
-
-  &--completed {
-    @extend .badge-success;
-  }
-
-  &--created {
-    @extend .badge-info;
-  }
-
-  &--failed {
-    @extend .badge-danger;
-  }
 }
