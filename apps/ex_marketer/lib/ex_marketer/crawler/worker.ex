@@ -1,13 +1,12 @@
 defmodule ExMarketer.Crawler.Worker do
   alias ExMarketer.Keyword
-  alias ExMarketer.Crawler.Request
   alias ExMarketer.Crawler.Parse
 
   def perform(keyword_id, keyword) do
     on_start(keyword_id)
 
     try do
-      {:ok, response_body} = Request.get(keyword)
+      {:ok, response_body} = google_client().get(keyword)
       result = Parse.perform(response_body)
 
       on_success(keyword_id, result)
@@ -19,6 +18,8 @@ defmodule ExMarketer.Crawler.Worker do
         raise ex
     end
   end
+
+  defp google_client, do: Application.get_env(:ex_marketer, :google_client)
 
   defp on_start(keyword_id) do
     keyword_id

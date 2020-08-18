@@ -26,20 +26,13 @@ config :ex_marketer_web, :sql_sandbox, true
 # Print only warnings and errors during test
 config :logger, level: :warn
 
-# ExVCR configuration
-config :exvcr,
-  vcr_cassette_library_dir: "test/fixture/vcr_cassettes",
-  custom_cassette_library_dir: "test/fixture/custom_cassettes",
-  filter_sensitive_data: [
-    [pattern: "<PASSWORD>.+</PASSWORD>", placeholder: "PASSWORD_PLACEHOLDER"]
-  ],
-  filter_url_params: false,
-  filter_request_headers: [],
-  response_headers_blacklist: []
-
 # Wallaby
 config :wallaby,
   otp_app: :ex_marketer,
   chromedriver: [headless: System.get_env("CHROME_HEADLESS", "true") !== "false"],
   screenshot_dir: "tmp/wallaby_screenshots",
   screenshot_on_failure: true
+
+config :ex_marketer,
+  google_client: ExMarketer.Crawler.GoogleClientMock,
+  http_adapter: ExMarketer.Crawler.HttpAdapterMock

@@ -1,17 +1,20 @@
 defmodule ExMarketer.Crawler.ParseTest do
   use ExUnit.Case, async: true
-  use ExVCR.Mock, adapter: ExVCR.Adapter.Hackney
 
-  alias ExMarketer.Crawler.Request
+  import Mox
+
   alias ExMarketer.Crawler.Parse
   alias ExMarketer.Crawler.Result
+  alias ExMarketer.Crawler.GoogleClientMock
+
+  setup :verify_on_exit!
 
   test "perform/1 returns the ExMarketer.Crawler.Result" do
-    use_cassette "google/valid" do
-      {:ok, response_body} = Request.get("grammarly")
+    GoogleClientMock |> expect(:get, fn _keyword -> {:ok, raw_html()} end)
 
-      assert Parse.perform(response_body) === expecting_result()
-    end
+    {:ok, response_body} = GoogleClientMock.get("grammarly")
+
+    assert Parse.perform(response_body) === expecting_result()
   end
 
   defp expecting_result do
@@ -38,7 +41,7 @@ defmodule ExMarketer.Crawler.ParseTest do
   end
 
   defp raw_html do
-    {:ok, body} = File.read("test/fixture/vcr_cassettes/google/valid.json")
+    {:ok, body} = File.read("test/fixture/google_page.json")
     {:ok, json} = Jason.decode(body)
 
     result = json |> Enum.at(0)
