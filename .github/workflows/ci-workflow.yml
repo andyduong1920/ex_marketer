@@ -28,26 +28,31 @@ jobs:
           otp-version: "23.0.2"
           elixir-version: "1.10.4"
 
-      - name: Cache Elixir modules
+      - name: Cache Elixir build
         uses: actions/cache@v2
         with:
-          path: deps
-          key: ${{ runner.os }}-mix-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
+          path: |
+            _build
+            deps
+          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
           restore-keys: |
             ${{ runner.os }}-mix-
 
       - name: Cache Node npm
         uses: actions/cache@v2
         with:
-          path: ~/.npm
+          path: apps/ex_marketer_web/assets/node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
 
       - name: Install Dependencies
-        run: |
-          mix deps.get
-          mix deps.compile
+        run: mix deps.get
+
+      - name: Compile
+        run: mix compile
+        env:
+          MIX_ENV: test
 
       - name: Install node module
         run: cd apps/ex_marketer_web/assets && npm install
