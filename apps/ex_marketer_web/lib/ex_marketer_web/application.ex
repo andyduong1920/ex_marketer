@@ -10,7 +10,8 @@ defmodule ExMarketerWeb.Application do
       # Start the Telemetry supervisor
       ExMarketerWeb.Telemetry,
       # Start the Endpoint (http/https)
-      ExMarketerWeb.Endpoint
+      ExMarketerWeb.Endpoint,
+      ExMarketerWeb.Presence
       # Start a worker by calling: ExMarketerWeb.Worker.start_link(arg)
       # {ExMarketerWeb.Worker, arg}
     ]
