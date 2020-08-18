@@ -1,10 +1,18 @@
-<%= form_for @changeset, Routes.keyword_path(@conn, :create), [multipart: true], fn f -> %>
-	<div class="form-group">
-		<%= file_input f, :file, class: "form-control-file", required: true %>
-		<%= error_tag f, :file %>
+<div class="row">
+	<div class="col col-4">
+		<%= form_for @changeset, Routes.keyword_path(@conn, :create), [multipart: true], fn f -> %>
+			<div class="form-group">
+				<%= file_input f, :file, class: "form-control-file", required: true %>
+				<%= error_tag f, :file %>
+			</div>
+
+			<div class="form-group">
+				<%= submit gettext("upload"), class: "btn btn-sm btn-primary" %>
+			</div>
+		<% end %>
 	</div>
 
-	<div class="form-group">
-		<%= submit gettext("upload"), class: "btn btn-sm btn-primary" %>
+	<div class="col col-8">
+		<%= link gettext("download_example_csv"), to: "/template.csv", class: "btn btn-info" %>
 	</div>
-<% end %>
+</div>

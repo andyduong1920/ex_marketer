@@ -6,7 +6,9 @@ defmodule ExMarketerWeb.KeywordController do
   alias ExMarketer.Crawler.TaskSupervisor
 
   def index(conn, _params) do
-    keywords = Keyword.all()
+    current_user = conn.assigns.current_user
+
+    keywords = Keyword.list_by_user(current_user.id)
 
     render(conn, "index.html", keywords: keywords)
   end
@@ -14,7 +16,7 @@ defmodule ExMarketerWeb.KeywordController do
   def show(conn, %{"id" => id}) do
     keyword = Keyword.find(id)
 
-    if !is_nil(keyword) && Keyword.successed?(keyword) do
+    if keyword_displayable?(conn, keyword) do
       render(conn, "show.html", keyword: keyword)
     else
       render_404(conn)
@@ -31,8 +33,10 @@ defmodule ExMarketerWeb.KeywordController do
     changeset = Keyword.upload_keyword_changeset(keyword_params)
 
     if changeset.valid? do
+      current_user = conn.assigns.current_user
+
       CsvParser.stream_parse(keyword_params["file"].path)
-      |> Enum.map(&TaskSupervisor.start_chilld(&1))
+      |> Enum.map(&TaskSupervisor.start_chilld(&1, current_user.id))
 
       conn
       |> put_flash(:info, gettext("upload_success"))

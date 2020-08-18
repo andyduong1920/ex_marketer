@@ -17,10 +17,11 @@ defmodule ExMarketerWeb.ViewListKeywordTest do
   describe "given the keyword in the database" do
     feature "view list keyword", %{session: session} do
       user = insert(:user)
-      insert(:keyword, status: "created")
-      insert(:keyword, status: "in_progress")
-      insert(:keyword, status: "failed")
-      insert(:keyword, status: "successed")
+      insert(:keyword, user: user, status: "created")
+      insert(:keyword, user: user, status: "in_progress")
+      insert(:keyword, user: user, status: "failed")
+      insert(:keyword, user: user, status: "successed")
+      insert(:keyword, user: insert(:user), keyword: "Another user keyword")
 
       session
       |> login(user.email, valid_user_password())
@@ -29,6 +30,7 @@ defmodule ExMarketerWeb.ViewListKeywordTest do
       |> assert_has(Query.css(@selectors.card_keyword, count: 4))
       |> assert_has(Query.link(@messages.view_details))
       |> assert_has(Query.link(@messages.view_page))
+      |> refute_has(Query.text("Another user keyword"))
 
       session
       |> find(Query.css(@selectors.card_keyword_successed))

@@ -5,6 +5,7 @@ defmodule ExMarketer.Keyword do
 
   alias ExMarketer.Keyword
   alias ExMarketer.Repo
+  alias ExMarketer.Accounts.User
 
   @statues %{
     created: "created",
@@ -14,11 +15,13 @@ defmodule ExMarketer.Keyword do
   }
 
   schema "keywords" do
-    field :keyword, :string
-    field :status, :string, default: @statues.created
-    field :result, :map, default: %{}
-    field :failure_reason, :string
-    field :file, :map, virtual: true
+    field(:keyword, :string)
+    field(:status, :string, default: @statues.created)
+    field(:result, :map, default: %{})
+    field(:failure_reason, :string)
+    field(:file, :map, virtual: true)
+
+    belongs_to(:user, User)
 
     timestamps()
   end
@@ -30,9 +33,22 @@ defmodule ExMarketer.Keyword do
   def all() do
     # TODO: Pagination
     query =
-      from Keyword,
+      from(Keyword,
         order_by: [desc: :inserted_at],
         limit: 20
+      )
+
+    Repo.all(query)
+  end
+
+  def list_by_user(user_id) do
+    # TODO: Pagination
+    query =
+      from(k in Keyword,
+        where: k.user_id == ^user_id,
+        order_by: [desc: :inserted_at],
+        limit: 20
+      )
 
     Repo.all(query)
   end
@@ -49,7 +65,7 @@ defmodule ExMarketer.Keyword do
 
   def update!(%Keyword{} = keyword, attrs \\ %{}) do
     keyword
-    |> changeset(attrs)
+    |> update_changeset(attrs)
     |> Repo.update!()
   end
 
@@ -59,8 +75,15 @@ defmodule ExMarketer.Keyword do
 
   def changeset(%Keyword{} = keyword, attrs) do
     keyword
-    |> cast(attrs, [:keyword, :status, :result, :failure_reason])
-    |> validate_required(:keyword)
+    |> cast(attrs, [:keyword, :status, :result, :failure_reason, :user_id])
+    |> validate_required([:keyword, :user_id])
+    |> validate_inclusion(:status, Map.values(@statues))
+    |> assoc_constraint(:user)
+  end
+
+  def update_changeset(keyword, attrs) do
+    keyword
+    |> cast(attrs, [:status, :result, :failure_reason])
     |> validate_inclusion(:status, Map.values(@statues))
   end
 

@@ -9,7 +9,7 @@ defmodule ExMarketer.Crawler.TaskSupervisorTest do
     @tag :skip
     test 'start_chilld/1 spawn a new process' do
       use_cassette "google/valid" do
-        {:ok, pid} = TaskSupervisor.start_chilld("grammarly")
+        {:ok, pid} = TaskSupervisor.start_chilld("grammarly", insert(:user).id)
 
         assert is_pid(pid)
       end
@@ -20,7 +20,7 @@ defmodule ExMarketer.Crawler.TaskSupervisorTest do
       use_cassette "google/valid" do
         assert Keyword.all() |> Enum.count() === 0
 
-        TaskSupervisor.start_chilld("grammarly")
+        TaskSupervisor.start_chilld("grammarly", insert(:user).id)
 
         assert Keyword.all() |> Enum.count() === 1
       end
@@ -31,7 +31,8 @@ defmodule ExMarketer.Crawler.TaskSupervisorTest do
     @tag :skip
     test 'start_chilld/1 spawn a list new process' do
       use_cassette "google/valid_list" do
-        [{:ok, pid_1}, {:ok, pid_2}] = TaskSupervisor.start_chilld(["grammarly", "developer"])
+        [{:ok, pid_1}, {:ok, pid_2}] =
+          TaskSupervisor.start_chilld(["grammarly", "developer"], insert(:user).id)
 
         assert is_pid(pid_1)
         assert is_pid(pid_2)
@@ -43,7 +44,7 @@ defmodule ExMarketer.Crawler.TaskSupervisorTest do
       use_cassette "google/valid_list" do
         assert Keyword.all() |> Enum.count() === 0
 
-        TaskSupervisor.start_chilld(["grammarly", "developer"])
+        TaskSupervisor.start_chilld(["grammarly", "developer"], insert(:user).id)
 
         assert Keyword.all() |> Enum.count() === 2
       end
@@ -54,7 +55,7 @@ defmodule ExMarketer.Crawler.TaskSupervisorTest do
     @tag :skip
     test 'start_chilld/1 spawn a new process' do
       use_cassette "google/invalid" do
-        {:ok, pid} = TaskSupervisor.start_chilld("invalid")
+        {:ok, pid} = TaskSupervisor.start_chilld("invalid", insert(:user).id)
 
         assert is_pid(pid)
       end
@@ -65,7 +66,7 @@ defmodule ExMarketer.Crawler.TaskSupervisorTest do
       use_cassette "google/invalid" do
         assert Keyword.all() |> Enum.count() === 0
 
-        TaskSupervisor.start_chilld("invalid")
+        TaskSupervisor.start_chilld("invalid", insert(:user).id)
 
         assert Keyword.all() |> Enum.count() === 1
       end
