@@ -45,11 +45,11 @@ defmodule ExMarketer.Crawler.Worker do
   end
 
   @impl true
-  def terminate(reason, state) when reason in [:normal, :shutdown] do
+  def terminate(reason, _state) when reason in [:normal, :shutdown] do
   end
 
   @impl true
-  def terminate({:shutdown, _term}, state) do
+  def terminate({:shutdown, _term}, _state) do
   end
 
   def terminate(reason, state) do
