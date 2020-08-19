@@ -15,7 +15,7 @@ defmodule ExMarketer.Crawler.Worker do
 
   @impl true
   def init(keyword_id) do
-    Process.send_after(self(), :perform, 500)
+    Process.send_after(self(), :perform, 1000)
 
     {:ok, %{keyword_id: keyword_id}, {:continue, :get_keyword}}
   end
