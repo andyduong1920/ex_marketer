@@ -23,11 +23,4 @@ defmodule ExMarketerWeb.KeywordController do
       |> halt()
     end
   end
-
-  def create(conn, _) do
-    conn
-    |> redirect(to: Routes.keyword_index_path(conn, :index))
-    |> put_flash(:error, "aaa")
-    |> halt()
-  end
 end
