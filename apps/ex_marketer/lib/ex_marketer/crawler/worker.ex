@@ -15,8 +15,6 @@ defmodule ExMarketer.Crawler.Worker do
 
   @impl true
   def init(keyword_id) do
-    Process.send_after(self(), :perform, 3000)
-
     {:ok, %{keyword_id: keyword_id}, {:continue, :get_keyword}}
   end
 
@@ -30,11 +28,11 @@ defmodule ExMarketer.Crawler.Worker do
       |> Map.put(:keyword, keyword_record.keyword)
       |> Map.put(:user_id, keyword_record.user_id)
 
-    {:noreply, new_state}
+    {:noreply, new_state, {:continue, :perform}}
   end
 
   @impl true
-  def handle_info(:perform, state) do
+  def handle_continue(:perform, state) do
     on_start(state.keyword_id)
 
     {:ok, response_body} = google_client().get(state.keyword)
