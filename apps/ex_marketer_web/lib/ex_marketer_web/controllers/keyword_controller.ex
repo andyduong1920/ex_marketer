@@ -2,7 +2,7 @@ defmodule ExMarketerWeb.KeywordController do
   use ExMarketerWeb, :controller
 
   alias ExMarketer.{Keyword, CsvParser}
-  alias ExMarketer.Crawler.TaskSupervisor
+  alias ExMarketer.Crawler.DynamicSupervisor
 
   def create(conn, %{"keyword" => keyword_params}) do
     changeset = Keyword.upload_keyword_changeset(keyword_params)
@@ -11,7 +11,7 @@ defmodule ExMarketerWeb.KeywordController do
       current_user = conn.assigns.current_user
 
       CsvParser.stream_parse(keyword_params["file"].path)
-      |> Enum.map(&TaskSupervisor.start_chilld(&1, current_user.id))
+      |> Enum.map(&DynamicSupervisor.start_child(&1, current_user.id))
 
       conn
       |> redirect(to: Routes.keyword_index_path(conn, :index))
