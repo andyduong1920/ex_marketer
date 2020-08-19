@@ -9,12 +9,9 @@ defmodule ExMarketer.Crawler.DynamicSupervisor do
   def start_child(keyword, user_id) when is_binary(keyword) do
     {:ok, keyword_record} = Keyword.create(%{keyword: keyword, user_id: user_id})
 
-    {:ok, _pid} =
-      DynamicSupervisor.start_child(
-        ExMarketer.DynamicSupervisor,
-        Worker.child_spec(keyword_record.id)
-      )
-
-    Worker.perform(keyword_record.id)
+    DynamicSupervisor.start_child(
+      ExMarketer.DynamicSupervisor,
+      Worker.child_spec(keyword_record.id)
+    )
   end
 end
