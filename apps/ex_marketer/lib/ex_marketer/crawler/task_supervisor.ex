@@ -9,7 +9,7 @@ defmodule ExMarketer.Crawler.TaskSupervisor do
   def start_chilld(keyword, user_id) when is_binary(keyword) do
     {:ok, record} = Keyword.create(%{keyword: keyword, user_id: user_id})
 
-    Task.Supervisor.start_child(
+    Task.Supervisor.async_nolink(
       ExMarketer.TaskSupervisor,
       fn ->
         Worker.perform(record.id, keyword)
