@@ -12,10 +12,21 @@ defmodule ExMarketer.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: ExMarketer.PubSub},
       {Registry, keys: :unique, name: ExMarketer.Crawler.WorkerRegistry},
+      :poolboy.child_spec(:crawler_worker_pool, poolboy_config()),
       {DynamicSupervisor,
        strategy: :one_for_one, max_restarts: 2, name: ExMarketer.DynamicSupervisor}
     ]
 
     Supervisor.start_link(children, strategy: :one_for_one, name: ExMarketer.Supervisor)
+  end
+
+  defp poolboy_config do
+    [
+      name: {:local, :crawler_worker_pool},
+      worker_module: ExMarketer.Crawler.Pool,
+      size: 10,
+      max_overflow: 0,
+      strategy: "fifo"
+    ]
   end
 end

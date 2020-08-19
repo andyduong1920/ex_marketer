@@ -45,7 +45,8 @@ defmodule ExMarketer.MixProject do
       {:floki, "~> 0.27.0"},
       {:csv, "~> 2.3"},
       {:ex_machina, "~> 2.4", only: :test},
-      {:mox, "~> 0.5.2", only: :test}
+      {:mox, "~> 0.5.2", only: :test},
+      {:poolboy, "~> 1.5.2"}
     ]
   end
 
