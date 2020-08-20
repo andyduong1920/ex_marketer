@@ -56,7 +56,7 @@ defmodule ExMarketer.Crawler.Worker do
     keyword_record
     |> Keyword.update!(%{status: Keyword.statues().in_progress})
 
-    broadcast_to_user(keyword_record.id, keyword_id.user_id)
+    broadcast_to_user(keyword_record.id, keyword_record.user_id)
   end
 
   defp on_success(keyword_id, result) do
@@ -65,7 +65,7 @@ defmodule ExMarketer.Crawler.Worker do
     keyword_record
     |> Keyword.update!(%{status: Keyword.statues().completed, result: Map.from_struct(result)})
 
-    broadcast_to_user(keyword_record.id, keyword_id.user_id)
+    broadcast_to_user(keyword_record.id, keyword_record.user_id)
   end
 
   defp on_fail(keyword_id, _ex) do
@@ -77,7 +77,7 @@ defmodule ExMarketer.Crawler.Worker do
     keyword_record
     |> Keyword.update!(%{status: Keyword.statues().failed, failure_reason: "Failed"})
 
-    broadcast_to_user(keyword_record.id, keyword_id.user_id)
+    broadcast_to_user(keyword_record.id, keyword_record.user_id)
   end
 
   defp broadcast_to_user(keyword_id, user_id) do
