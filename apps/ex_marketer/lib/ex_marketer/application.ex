@@ -24,8 +24,8 @@ defmodule ExMarketer.Application do
     [
       name: {:local, :crawler_worker_pool},
       worker_module: ExMarketer.Crawler.Pool,
-      size: 10,
-      max_overflow: 0,
+      size: 8,
+      max_overflow: 2,
       strategy: "fifo"
     ]
   end
