@@ -68,7 +68,7 @@ defmodule ExMarketer.Crawler.Worker do
     broadcast_to_user(keyword_record.id, keyword_id.user_id)
   end
 
-  defp on_fail(keyword_id, ex) do
+  defp on_fail(keyword_id, _ex) do
     # TODO: Find a way to parse the error
     # {{reason, _}, _} = ex
 
