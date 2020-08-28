@@ -12,6 +12,7 @@ defmodule ExMarketerWeb.KeywordLive.IndexLive do
       |> assign_new(:current_user_id, fn -> current_user_id end)
       |> assign(:keywords, Keyword.list_by_user(current_user_id))
       |> assign(:in_progress_keyword_stats, Keyword.in_progress_keyword_stats(current_user_id))
+      |> assign(:in_queue_keyword_stats, Keyword.in_queue_keyword_stats(current_user_id))
       |> assign(:changeset, Keyword.upload_keyword_changeset())
       |> assign(:recently_search, false)
       |> assign(:keyword, nil)
@@ -62,6 +63,10 @@ defmodule ExMarketerWeb.KeywordLive.IndexLive do
       |> assign(
         :in_progress_keyword_stats,
         Keyword.in_progress_keyword_stats(socket.assigns.current_user_id)
+      )
+      |> assign(
+        :in_queue_keyword_stats,
+        Keyword.in_queue_keyword_stats(socket.assigns.current_user_id)
       )
       |> update(:keywords, &update_keywords(&1, keyword))
 

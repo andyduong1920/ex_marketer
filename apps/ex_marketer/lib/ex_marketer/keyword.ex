@@ -71,6 +71,20 @@ defmodule ExMarketer.Keyword do
     record_count
   end
 
+  def in_queue_keyword_stats(user_id) do
+    query =
+      from(k in all_by_user_query(user_id),
+        select: %{
+          record_count: count(k.id)
+        },
+        where: k.status == ^"in_queue"
+      )
+
+    [%{record_count: record_count}] = Repo.all(query)
+
+    record_count
+  end
+
   def find(id) do
     Repo.get(Keyword, id)
   end

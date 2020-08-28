@@ -1,4 +1,8 @@
 .badge {
+  &--in_queue {
+    @extend .badge-info;
+  }
+
   &--in_progress {
     @extend .badge-primary;
   }

@@ -37,6 +37,9 @@
 		<div class="row no-gutters">
 			<div class="col col-auto">
 				<h4 class="mr-2">
+					<span class="badge badge--in_queue">
+						<%= KeywordView.localize_status("in_queue") %>: <%= @in_queue_keyword_stats %>
+					</span>
 					<span class="badge badge--in_progress">
 						<%= KeywordView.localize_status("in_progress") %>: <%= @in_progress_keyword_stats %>
 					</span>

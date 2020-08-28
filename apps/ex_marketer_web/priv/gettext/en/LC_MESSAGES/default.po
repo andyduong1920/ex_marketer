@@ -7,6 +7,9 @@ msgstr "In Queue"
 msgid "in_progress"
 msgstr "In Progress"
 
+msgid "in_queue"
+msgstr "In Queue"
+
 msgid "failed"
 msgstr "Failed"
 
