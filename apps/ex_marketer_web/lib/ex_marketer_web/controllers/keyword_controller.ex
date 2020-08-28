@@ -2,6 +2,10 @@ defmodule ExMarketerWeb.KeywordController do
   use ExMarketerWeb, :controller
 
   alias ExMarketer.{Keyword, CsvParser}
+<<<<<<< HEAD
+=======
+  alias ExMarketer.Worker.Crawler
+>>>>>>> Adding OBan
 
   def create(conn, %{"keyword" => keyword_params}) do
     changeset = Keyword.upload_keyword_changeset(keyword_params)
@@ -13,7 +17,15 @@ defmodule ExMarketerWeb.KeywordController do
       |> Enum.map(fn keywords ->
         keywords
         |> Enum.each(fn keyword ->
+<<<<<<< HEAD
           Keyword.create(%{keyword: String.trim(keyword), user_id: current_user.id})
+=======
+          {:ok, keyword_record} = Keyword.create(%{keyword: String.trim(keyword), user_id: current_user.id})
+
+          %{keyword_id: keyword_record.id, keyword: keyword_record.keyword}
+          |> Crawler.new()
+          |> Oban.insert()
+>>>>>>> Adding OBan
         end)
       end)
 
