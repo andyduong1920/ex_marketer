@@ -2,7 +2,7 @@
 	<div>
 		<div class="row">
 			<div class="col col-auto">
-				<%= f = form_for @changeset, Routes.keyword_path(@socket, :create), multipart: true, phx_submit: :form_upload_submit, phx_trigger_action: @trigger_submit %>
+				<%= f = form_for @changeset, Routes.keyword_path(@socket, :create), multipart: true %>
 					<div class="row">
 						<div class="col col-auto">
 							<span>Upload file</span>
