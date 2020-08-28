@@ -77,7 +77,7 @@ defmodule ExMarketer.Keyword do
         select: %{
           record_count: count(k.id)
         },
-        where: k.status == ^"in_queue"
+        where: k.status == ^"created"
       )
 
     [%{record_count: record_count}] = Repo.all(query)
