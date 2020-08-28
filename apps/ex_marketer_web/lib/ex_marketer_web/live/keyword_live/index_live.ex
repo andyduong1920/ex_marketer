@@ -13,7 +13,6 @@ defmodule ExMarketerWeb.KeywordLive.IndexLive do
       |> assign(:keywords, Keyword.list_by_user(current_user_id))
       |> assign(:in_progress_keyword_stats, Keyword.in_progress_keyword_stats(current_user_id))
       |> assign(:changeset, Keyword.upload_keyword_changeset())
-      |> assign(:trigger_submit, false)
       |> assign(:recently_search, false)
       |> assign(:keyword, nil)
       |> assign(:selected_keyword, nil)
@@ -40,14 +39,6 @@ defmodule ExMarketerWeb.KeywordLive.IndexLive do
   end
 
   def handle_params(_, _, socket) do
-    {:noreply, socket}
-  end
-
-  def handle_event("form_upload_submit", _params, socket) do
-    socket =
-      socket
-      |> assign(:trigger_submit, true)
-
     {:noreply, socket}
   end
 
