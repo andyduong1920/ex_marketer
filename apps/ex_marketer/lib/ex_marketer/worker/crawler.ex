@@ -1,52 +1,57 @@
-defmodule ExMarketer.Crawler.Worker do
+defmodule ExMarketer.Worker.Crawler do
+  use Oban.Worker, queue: :default, max_attempts: 2
+
   alias ExMarketer.Keyword
   alias ExMarketer.Crawler.Parse
 
-  def perform(keyword_id, keyword) do
+  @impl Oban.Worker
+  def perform(%Oban.Job{args: %{"keyword_id" => keyword_id, "keyword" => keyword}}) do
     on_start(keyword_id)
 
     try do
       {:ok, response_body} = google_client().get(keyword)
-      result = Parse.perform(response_body)
 
-      on_success(keyword_id, result)
+      on_success(keyword_id, Parse.perform(response_body))
     rescue
       ex ->
-        on_fail(keyword_id, ex)
+        on_fail(keyword_id)
 
-        # Re-raise the exception so the Supervisor could restart the worker
+        # Re-raise the exception so Oban could retry
         raise ex
     end
+
+    :ok
   end
 
   defp google_client, do: Application.get_env(:ex_marketer, :google_client)
 
   defp on_start(keyword_id) do
-    keyword_id
-    |> find_keyword
+    keyword_record = find_keyword(keyword_id)
+
+    keyword_record
     |> Keyword.update!(%{status: Keyword.statues().in_progress})
+
+    broadcast_to_user(keyword_record.user_id, keyword_id)
   end
 
   defp on_success(keyword_id, result) do
-    keyword = find_keyword(keyword_id)
+    keyword_record = find_keyword(keyword_id)
 
-    keyword
+    keyword_record
     |> Keyword.update!(%{status: Keyword.statues().completed, result: Map.from_struct(result)})
 
-    broadcast_to_user(keyword.user_id, keyword_id)
+    broadcast_to_user(keyword_record.user_id, keyword_id)
 
     :ok
   end
 
-  defp on_fail(keyword_id, ex) do
-    %MatchError{term: {:error, error_message}} = ex
+  defp on_fail(keyword_id) do
+    keyword_record = find_keyword(keyword_id)
 
-    keyword = find_keyword(keyword_id)
+    keyword_record
+    |> Keyword.update!(%{status: Keyword.statues().failed})
 
-    keyword
-    |> Keyword.update!(%{status: Keyword.statues().failed, failure_reason: error_message})
-
-    broadcast_to_user(keyword.user_id, keyword_id)
+    broadcast_to_user(keyword_record.user_id, keyword_id)
 
     :error
   end

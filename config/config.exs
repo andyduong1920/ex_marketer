@@ -35,6 +35,11 @@ config :phoenix, :json_library, Jason
 
 config :hackney, use_default_pool: false
 
+config :ex_marketer, Oban,
+  repo: ExMarketer.Repo,
+  plugins: [Oban.Plugins.Pruner],
+  queues: [default: 5]
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"
