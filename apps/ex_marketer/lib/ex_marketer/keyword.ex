@@ -6,6 +6,7 @@ defmodule ExMarketer.Keyword do
   alias ExMarketer.Keyword
   alias ExMarketer.Repo
   alias ExMarketer.Accounts.User
+  alias ExMarketer.Worker.Crawler
 
   @statues %{
     created: "created",
@@ -75,9 +76,14 @@ defmodule ExMarketer.Keyword do
   end
 
   def create(attrs \\ %{}) do
-    %Keyword{}
-    |> changeset(attrs)
-    |> Repo.insert()
+    {:ok, record} =
+      %Keyword{}
+      |> changeset(attrs)
+      |> Repo.insert()
+
+    %{keyword_id: record.id, keyword: record.keyword}
+    |> Crawler.new()
+    |> Oban.insert()
   end
 
   def update!(%Keyword{} = keyword, attrs \\ %{}) do
