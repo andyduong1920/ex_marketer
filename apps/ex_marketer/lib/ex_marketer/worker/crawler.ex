@@ -1,5 +1,5 @@
 defmodule ExMarketer.Worker.Crawler do
-  use Oban.Worker, queue: :default, max_attempts: 2
+  use Oban.Worker, queue: :crawler, max_attempts: 2
 
   alias ExMarketer.Keyword
   alias ExMarketer.Crawler.Parse

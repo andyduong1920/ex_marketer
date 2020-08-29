@@ -38,7 +38,10 @@ config :hackney, use_default_pool: false
 config :ex_marketer, Oban,
   repo: ExMarketer.Repo,
   plugins: [Oban.Plugins.Pruner],
-  queues: [default: [limit: 5, poll_interval: :timer.seconds(3)]]
+  queues: [
+    default: [limit: 10],
+    crawler: [limit: 5, dispatch_cooldown: :timer.seconds(1)] # 5 jobs per second - by pass Google threshold
+  ]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
