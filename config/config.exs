@@ -38,7 +38,7 @@ config :hackney, use_default_pool: false
 config :ex_marketer, Oban,
   repo: ExMarketer.Repo,
   plugins: [Oban.Plugins.Pruner],
-  queues: [default: 5]
+  queues: [default: [limit: 5, poll_interval: :timer.seconds(3)]]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
