@@ -50,7 +50,7 @@ jobs:
         run: mix deps.get
 
       - name: Compile
-        run: mix compile
+        run: mix compile --warnings-as-errors
         env:
           MIX_ENV: test
 
