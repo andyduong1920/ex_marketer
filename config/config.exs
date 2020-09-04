@@ -40,7 +40,8 @@ config :ex_marketer, Oban,
   plugins: [Oban.Plugins.Pruner],
   queues: [
     default: [limit: 10],
-    crawler: [limit: 5, dispatch_cooldown: :timer.seconds(1)] # 5 jobs per second - by pass Google threshold
+    # 5 jobs per second - by pass Google threshold
+    crawler: [limit: 5, dispatch_cooldown: :timer.seconds(1)]
   ]
 
 # Import environment specific config. This must remain at the bottom

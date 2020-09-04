@@ -3,6 +3,7 @@ defmodule ExMarketer.Keyword do
   import Ecto.Changeset
   import Ecto.Query, only: [from: 2]
 
+  alias Ecto.Multi
   alias ExMarketer.Keyword
   alias ExMarketer.Repo
   alias ExMarketer.Accounts.User
@@ -76,14 +77,14 @@ defmodule ExMarketer.Keyword do
   end
 
   def create(attrs \\ %{}) do
-    {:ok, record} =
-      %Keyword{}
-      |> changeset(attrs)
-      |> Repo.insert()
-
-    %{keyword_id: record.id, keyword: record.keyword}
-    |> Crawler.new()
-    |> Oban.insert()
+    Multi.new()
+    |> Multi.insert(:keyword, changeset(%Keyword{}, attrs))
+    |> Multi.run(:job, fn _repo, %{keyword: keyword} ->
+      %{keyword_id: keyword.id, keyword: keyword.keyword}
+      |> Crawler.new()
+      |> Oban.insert()
+    end)
+    |> Repo.transaction()
   end
 
   def update!(%Keyword{} = keyword, attrs \\ %{}) do
