@@ -28,7 +28,6 @@ defmodule ExMarketer.Worker.Crawler do
   defp on_start(keyword_id) do
     keyword_record = find_keyword(keyword_id)
 
-
     Keyword.update!(keyword_record, %{status: Keyword.statues().in_progress})
 
     broadcast_to_user(keyword_record.user_id, keyword_id)
@@ -37,8 +36,10 @@ defmodule ExMarketer.Worker.Crawler do
   defp on_success(keyword_id, result) do
     keyword_record = find_keyword(keyword_id)
 
-
-    Keyword.update!(keyword_record, %{status: Keyword.statues().completed, result: Map.from_struct(result)})
+    Keyword.update!(keyword_record, %{
+      status: Keyword.statues().completed,
+      result: Map.from_struct(result)
+    })
 
     broadcast_to_user(keyword_record.user_id, keyword_id)
 
@@ -47,7 +48,6 @@ defmodule ExMarketer.Worker.Crawler do
 
   defp on_fail(keyword_id) do
     keyword_record = find_keyword(keyword_id)
-
 
     Keyword.update!(keyword_record, %{status: Keyword.statues().failed})
 
