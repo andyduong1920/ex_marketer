@@ -50,4 +50,17 @@ defmodule ExMarketerWeb.KeywordLive.IndexLiveTest do
       assert live(conn, "/keywords/#{keyword.id}") |> follow_redirect(conn, "/keywords")
     end
   end
+
+  test "handle keyword complete", %{conn: conn, user: user} do
+    keyword = insert(:keyword, user: user, status: "in_progress", keyword: "Keyword")
+
+    {:ok, view, html} = live(conn, "/keywords")
+
+    assert html =~ "In Progress: 1"
+
+    ExMarketer.Keyword.update!(keyword, %{status: "completed"})
+    send(view.pid, {:keyword_completed, %{keyword_id: keyword.id}})
+
+    assert render(view) =~ "In Progress: 0"
+  end
 end
