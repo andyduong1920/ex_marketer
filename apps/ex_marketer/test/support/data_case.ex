@@ -25,6 +25,8 @@ defmodule ExMarketer.DataCase do
       import Ecto.Query
       import ExMarketer.DataCase
       import ExMarketer.Factory
+
+      use Oban.Testing, repo: ExMarketer.Repo
     end
   end
 
