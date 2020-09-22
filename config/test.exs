@@ -36,3 +36,8 @@ config :wallaby,
 config :ex_marketer,
   google_client: ExMarketer.Crawler.GoogleClientMock,
   http_adapter: ExMarketer.Crawler.HttpAdapterMock
+
+config :ex_marketer, Oban,
+  crontab: false,
+  queues: false,
+  plugins: false

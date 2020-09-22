@@ -12,7 +12,7 @@ defmodule ExMarketer.KeywordTest do
            }
   end
 
-  test "list_by_user/0 returns all Keyword records ordered with inserted_at DESC" do
+  test "list_by_user/1 returns all Keyword records ordered with inserted_at DESC" do
     current_time = DateTime.utc_now()
 
     user_1 = insert(:user)
@@ -71,9 +71,15 @@ defmodule ExMarketer.KeywordTest do
   end
 
   test "create/1 creates a record" do
-    insert(:keyword)
+    Keyword.create(params_with_assocs(:keyword, %{user_id: insert(:user).id}))
 
     assert Keyword.all() |> Enum.count() === 1
+    keyword = Keyword.all() |> List.first()
+
+    assert_enqueued(
+      worker: ExMarketer.Worker.Crawler,
+      args: %{keyword_id: keyword.id, keyword: keyword.keyword}
+    )
   end
 
   test "update!/2 update the record" do
