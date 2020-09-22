@@ -58,62 +58,79 @@ defmodule ExMarketer.Budget do
     Budget.update(budget, %{balance: 100})
   end
 
-  def job(id) do
+  def example_job(id) do
     IO.puts("--------------")
     IO.puts("Started job #{id}")
+
     :timer.sleep(3000)
+
     IO.puts("Finished job #{id}")
   end
 
   def non_concurrency() do
-    job(1)
-    job(2)
+    example_job(1)
+    example_job(2)
   end
 
   def intro_concurrency() do
-    Task.async_stream([1, 2], fn job_id ->
-      Budget.job(job_id)
+    Task.async_stream([1, 2, 3, 4], fn job_id ->
+      example_job(job_id)
     end)
     |> Stream.run()
   end
 
   def demo_1 do
-    budget = Budget.find_by_title("WFH")
-
-    Budget.update(budget, %{balance: budget.balance - 10})
+    update_balance(10)
   end
 
   def demo_2 do
-    Task.async_stream([10, 20], fn amount ->
-      budget = Budget.find_by_title("WFH")
-
-      Budget.update(budget, %{balance: budget.balance - amount})
+    Task.async_stream([10, 20, 30, 40], fn amount ->
+      update_balance(amount)
     end)
     |> Stream.run()
   end
 
   def demo_3 do
-    Task.async_stream([10, 20], fn amount ->
-      budget = Budget.find_by_title_and_lock("WFH")
-
-      Budget.update(budget, %{balance: budget.balance - amount})
+    Task.async_stream([10, 20, 30, 40], fn amount ->
+      update_balance_lock(amount)
     end)
     |> Stream.run()
   end
 
   def demo_4 do
-    Task.async_stream([10, 20], fn amount ->
-      try do
-        budget = Budget.find_by_title_and_nowait_lock("WFH")
-
-        Budget.update(budget, %{balance: budget.balance - amount})
-      rescue
-        _ex ->
-          budget = Budget.find_by_title_and_nowait_lock("WFH")
-
-          Budget.update(budget, %{balance: budget.balance - amount})
-      end
+    Task.async_stream([10, 20, 30, 40], fn amount ->
+      update_balance_nowait_lock(amount)
     end)
     |> Stream.run()
+  end
+
+  def update_balance(amount) do
+    Repo.transaction fn ->
+      IO.puts("--------------")
+      IO.puts("Started update transaction for #{amount}")
+
+      budget = Budget.find_by_title("WFH")
+      Budget.update(budget, %{balance: budget.balance - amount})
+    end
+  end
+
+  def update_balance_lock(amount) do
+    Repo.transaction fn ->
+      IO.puts("--------------")
+      IO.puts("Started update transaction for #{amount}")
+
+      budget = Budget.find_by_title_and_lock("WFH")
+      Budget.update(budget, %{balance: budget.balance - amount})
+    end
+  end
+
+  def update_balance_nowait_lock(amount) do
+    Repo.transaction fn ->
+      IO.puts("--------------")
+      IO.puts("Started update transaction for #{amount}")
+
+      budget = Budget.find_by_title_and_nowait_lock("WFH")
+      Budget.update(budget, %{balance: budget.balance - amount})
+    end
   end
 end
