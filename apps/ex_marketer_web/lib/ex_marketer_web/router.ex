@@ -49,7 +49,7 @@ defmodule ExMarketerWeb.Router do
 
   scope "/" do
     pipe_through(:browser)
-    live_dashboard("/dashboard", metrics: ExMarketerWeb.Telemetry)
+    live_dashboard("/dashboard", metrics: ExMarketerWeb.Telemetry, ecto_repos: [ExMarketer.Repo])
   end
 
   ## Authentication routes
